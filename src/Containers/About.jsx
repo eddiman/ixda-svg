@@ -1,34 +1,36 @@
 import React, { useState, useEffect, useRef, memo } from "react"
 import { Canvas, useThree } from "@react-three/fiber"
+import { isMobile, isSafari } from "react-device-detect";
 import Typed from "typed.js"
 import { Environment, OrbitControls, useGLTF, Stats, useTexture, Html } from "@react-three/drei"
 import { EffectComposer, N8AO, ToneMapping, Bloom, Noise, DepthOfField, HueSaturation, SSR } from "@react-three/postprocessing"
 import { BlendFunction } from "postprocessing"
 import "../styles/crt.scss"
+import CanvasExtend from "../Components/CanvasExtend"
 
 export const About = () => {
   const [step, setStep] = useState(-1)
   const [globalAudio, setGlobalAudio] = useState(null)
-  const [audioPath, setAudioPath] = useState("/sounds/alttp_story.mp3")
+  const [audioPath, setAudioPath] = useState("/sounds/alttp_intro.mp3")
   const [audioLoop, setAudioLoop] = useState(false)
 
   useEffect(() => {
-
-    if(globalAudio) {
-      globalAudio.pause();
+    if (globalAudio) {
+      globalAudio.pause()
     }
-    const audio = new Audio(audioPath);
-    audio.loop = audioLoop;
-    setGlobalAudio(audio)
-  }, [audioPath]); 
+
+      const audio = new Audio(audioPath)
+      audio.loop = audioLoop
+      setGlobalAudio(audio)
+
+  }, [audioPath])
 
   const playMusic = (audioPath, isLoop) => {
     // Create and play new audio
-    setAudioPath(audioPath);
-    setAudioLoop(isLoop);
-    globalAudio.play();
-  }; 
-
+    setAudioPath(audioPath)
+    setAudioLoop(isLoop)
+    globalAudio.play()
+  }
 
   const handleStart = () => {
     setStep(0)
@@ -70,7 +72,6 @@ export const About = () => {
       if (step == 0) {
         playMusic("/sounds/alttp_intro.mp3", false)
 
-        globalAudio.play();
         const timer = setTimeout(() => {
           setStep(1)
         }, 3000)
@@ -164,7 +165,7 @@ export const About = () => {
         {step === 2 && (
           <div className="story-screen">
             <div className="content-container">
-              <img src="" />
+              <div className="profile-image" />
               <span ref={storyEl}></span>
               {typedComplete ? (
                 <>
@@ -185,7 +186,8 @@ export const About = () => {
     )
   }
   return (
-    <Canvas shadows camera={{ position: [0, 0, 3], near: 0.1, far: 40 }} dpr={1}>
+    <CanvasExtend>
+    <Canvas shadows camera={{ position: [-1, 0, 3], near: 0.1, far: 40 }} dpr={1}>
       <Stats />
       <LerpCameraFOV isToggled={step == 2} />
       <color attach="background" args={["#0f1837"]} />
@@ -200,6 +202,7 @@ export const About = () => {
 
       <OrbitControls
         enablePan={false}
+        enableRotate={isSafari ? false : true}
         maxDistance={4}
         minDistance={1.7}
         minAzimuthAngle={-Math.PI / 8.5}
@@ -209,16 +212,23 @@ export const About = () => {
       />
       <RoomModel position={[0.1, -0.55, 0.5]} rotation={[0, -0.5, 0]} scale={[1, 1, 1]}>
         <Html className="content" scale={[0.15, 0.15, 0.15]} rotation-y={0.35} position={[-0.34, 0.52, -0.33]} transform occlude="blending">
-          <div className="tv-container crt-scanlines crt-flicker">{step === -1 ? 
-          <div className="av-screen">
-            <span className="channel-label">AV 9 - SPEL</span>
-            <button className="initiate-btn" onClick={handleStart}> START </button> 
-            <div className="white-noise"> </div>
-          </div>: <Intro />}</div>
+          <div className="tv-container crt-scanlines crt-flicker">
+            {step === -1 ? (
+              <div className="av-screen">
+                <span className="channel-label">AV 9 - SPEL</span>
+                <button className="initiate-btn" onClick={handleStart}>
+                  {" "}
+                  START{" "}
+                </button>
+                <div className="white-noise"> </div>
+              </div>
+            ) : (
+              <Intro />
+            )}
+          </div>
         </Html>
-
       </RoomModel>
-      <EffectComposer>
+      {      <EffectComposer>
     
         <N8AO
           halfRes={false} // Whether to render at half resolution for performance (true/false)
@@ -231,8 +241,9 @@ export const About = () => {
 
         <Noise opacity={0.2} />
         <HueSaturation blendFunction={BlendFunction.NORMAL} hue={0} saturation={0.4} />
-      </EffectComposer>
+      </EffectComposer>}
     </Canvas>
+    </CanvasExtend>
   )
 }
 

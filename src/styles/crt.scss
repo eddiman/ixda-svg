@@ -20,29 +20,7 @@
   font-weight: normal;
   font-style: normal;
 }
-@keyframes b {
-  100% {
-    background-position: 50% 0, 60% 50%;
-  }
-}
 
-@keyframes crt-on {
-  0% {
-    transform: scaleX(0.1) scaleY(1);
-  }
-
-  50% {
-    transform: scaleX(60) scaleY(1);
-  }
-
-  60% {
-    transform: scaleX(60) scaleY(1);
-  }
-
-  100% {
-    transform: scaleX(95) scaleY(95);
-  }
-}
 .tv-container {
   .av-screen {
     width: 100%;
@@ -75,13 +53,14 @@
     .initiate-btn {
       background-color: blue;
       border: none;
+      padding: 8px;
       text-shadow: none;
       font-family: "NesFont", sans-serif;
       box-shadow: none;
       font-size: 6px;
       position: absolute;
-      top: 40px;
-      left: 32px;
+      top: 36px;
+      left: 25px;
       &:hover {
         background-color: rgb(0, 0, 186);
       }
@@ -95,10 +74,7 @@
       left: 0;
       right: 0;
       z-index: -1;
-      background: repeating-radial-gradient(#000 0 0.0001%, #fff 0 0.0002%) 50% 0/250px 250px,
-        repeating-conic-gradient(#000 0 0.0001%, #fff 0 0.0002%) 60% 60%/250px 250px;
-      background-blend-mode: difference;
-      animation: b 1s infinite alternate;
+      background-image: url("../../public/img/noise.gif");
     }
   }
   span {
@@ -163,14 +139,7 @@
     }
   }
 
-  @keyframes showPresentText {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+
 
   .triforce-entry {
     z-index: 10;
@@ -180,38 +149,15 @@
     right: 0;
     bottom: 20px;
     background-color: black;
-    animation: entryScreen 12s forwards;
+    animation: triforceEntryScreen 12s forwards;
+    pointer-events: none;
   }
 
-  @keyframes entryScreen {
-    0% {
-      opacity: 1;
-      display: block;
-    }
 
-    80% {
-      opacity: 1;
-    }
 
-    99% {
-      opacity: 0;
-    }
 
-    100% {
-      opacity: 0;
-      display: none;
-    }
-  }
-
-  @keyframes masterSwordDrop {
-    0% {
-      transform: translateY(-55px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
   .welcome-screen {
+    background-color: #000;
     background-image: url("../../public/img/zelda_bg.jpg");
     background-size: cover;
     position: absolute;
@@ -272,15 +218,14 @@
     .border {
       background-color: black;
       position: absolute;
-      bottom: 10px;
+      bottom: 2px;
       left: 0;
       right: 0;
-      height: 10px;
+      height: 18px;
       color: white;
       font-family: "NesFont", sans-serif;
       font-size: 4px;
       padding: 2px;
-      width: 100%;
       text-align: center;
     }
   }
@@ -320,7 +265,7 @@
         font-size: 11px;
         line-height: 0;
       }
-      img {
+      .profile-image {
         background-image: url("../../public/img/ed_pic.jpg");
         position: absolute;
         top: 1px;
@@ -343,11 +288,71 @@
     }
   }
 }
+
+/************************************************************** ANIMATIONS ************************************************************/
 .move-up-and-fade {
   opacity: 0;
   transform: translateY(-10%); /* Move text upwards */
   transition: opacity 0.5s ease, transform 0.5s ease; /* Define transition properties */
+
 }
+
+
+@keyframes showPresentText {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes crt-on {
+  0% {
+    transform: scaleX(0.1) scaleY(1);
+  }
+
+  50% {
+    transform: scaleX(60) scaleY(1);
+  }
+
+  60% {
+    transform: scaleX(60) scaleY(1);
+  }
+
+  100% {
+    transform: scaleX(95) scaleY(95);
+  }
+}
+
+@keyframes triforceEntryScreen {
+  0% {
+    opacity: 1;
+    display: block;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  99% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes masterSwordDrop {
+  0% {
+    transform: translateY(-55px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 
 .crt-scanlines::before {
   content: " ";
