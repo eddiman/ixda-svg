@@ -1,0 +1,42 @@
+{
+  "name": "pires2023",
+  "version": "1.0.0",
+  "description": "How to make a clump of objects that move towards the center point.",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "@react-three/cannon": "6.5.2",
+    "@react-three/drei": "^9.74.6",
+    "@react-three/fiber": "^8.13.0",
+    "@react-three/postprocessing": "2.14.9",
+    "@types/react": "^18.2.8",
+    "@types/three": "^0.152.1",
+    "csbbust": "1.0.1",
+    "leva": "0.9.35",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.2",
+    "react-scripts": "5.0.1",
+    "three": "^0.153.0",
+    "three-stdlib": "2.27.2",
+    "typed.js": "^2.1.0",
+    "valtio": "1.10.4"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "sass": "^1.70.0",
+    "typescript": "3.8.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
