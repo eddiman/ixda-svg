@@ -95,12 +95,12 @@ a {
 
 nav {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   position: absolute;
   z-index: 1;
-  left: 2rem;
-  bottom: 2rem;
-  gap: .5rem;
+  left: 0;
+  bottom: 0;
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(7px);
 
@@ -145,6 +145,7 @@ nav {
     }
   }
   a {
+    flex:1;
     transition: color .15s ease-in-out;
     font-size: 2rem;
     padding-top: .5rem;
