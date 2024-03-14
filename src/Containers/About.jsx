@@ -190,7 +190,6 @@ export const About = () => {
     <CanvasExtend>
       <Canvas shadows camera={{ position: [-1, 0, 3], near: 0.1, far: 40 }} dpr={1}>
         <Stats />
-        <Suspense fallback={<LoadingComp />}>
           <LerpCameraFOV isToggled={step == 2} />
           <color attach="background" args={["#0f1837"]} />
           <ambientLight intensity={1} color={"#394160"} />
@@ -245,7 +244,6 @@ export const About = () => {
               <HueSaturation blendFunction={BlendFunction.NORMAL} hue={0} saturation={0.4} />
             </EffectComposer>
           }
-        </Suspense>
       </Canvas>
     </CanvasExtend>
   )

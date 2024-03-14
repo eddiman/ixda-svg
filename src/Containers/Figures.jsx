@@ -48,7 +48,7 @@ function Scene(props) {
   const [accent, click] = useReducer((state) => ++state % accents.length, 0)
   const connectors = useMemo(() => shuffle(accent), [accent])
   return (
-    <Canvas onClick={click} shadows dpr={1} gl={{ antialias: false }} camera={{ position: [0, 0, 15], fov: 40, near: 1, far: 20 }} {...props}>
+    <Canvas onClick={click} shadows dpr={1} gl={{ antialias: false }} camera={{ position: [0, 0, 15], fov: 30, near: 1, far: 20 }} {...props}>
         <Stats />
 
       <color attach="background" args={["#e2e2e2"]} />
@@ -97,7 +97,7 @@ function FigurePhysics({ position, children, vec = new THREE.Vector3(), scale, r
     <RigidBody linearDamping={4} angularDamping={1} friction={0.1} position={pos} ref={api} colliders={"ball"}>
 
       {children ? children : <Model {...props} />}
-      {accent && <pointLight intensity={8} distance={2.5} color={props.color} />}
+      {accent && <pointLight intensity={3} distance={2.5} color={props.color} />}
     </RigidBody>
   )
 }
