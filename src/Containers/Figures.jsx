@@ -5,10 +5,9 @@ import { useGLTF, MeshTransmissionMaterial, Environment, Lightformer, Stats } fr
 import { CuboidCollider, BallCollider, Physics, RigidBody } from "@react-three/rapier"
 import { EffectComposer, N8AO, Noise, Vignette, HueSaturation } from "@react-three/postprocessing"
 import { BlendFunction } from "postprocessing"
-
 import { easing } from "maath"
 
-const accents = ["white", "#c5c5c5", "#2c2c2c", "#616161"]
+const accents = ["white", "#f2d39a", "#7385c4", "#e9b28f", "#aad6b8", "#8a7faa"]
 const shuffle = (accent = 0) => [
   { color: accents[accent], roughness: 0.1, number: 1 },
   { color: accents[accent], roughness: 0.75, number: 2 },
@@ -48,8 +47,7 @@ function Scene(props) {
   const [accent, click] = useReducer((state) => ++state % accents.length, 0)
   const connectors = useMemo(() => shuffle(accent), [accent])
   return (
-    <Canvas onClick={click} shadows dpr={1} gl={{ antialias: false }} camera={{ position: [0, 0, 15], fov: 30, near: 1, far: 20 }} {...props}>
-        <Stats />
+    <Canvas onClick={click} shadows dpr={1} gl={{ antialias: false }} camera={{ position: [0, 0, 15], fov: 30, near: 1, far: 40 }} {...props}>
 
       <color attach="background" args={["#e2e2e2"]} />
       <ambientLight intensity={0.4} />
@@ -57,11 +55,11 @@ function Scene(props) {
       <Physics /*debug*/ gravity={[0, 0, 0]}>
         <Pointer />
         {connectors.map((props, i) => <FigurePhysics key={i} {...props} />) /* prettier-ignore */}
-        <FigurePhysics position={[10, 10, 5]}>
-{/*           <Model>
+       {/*  <FigurePhysics position={[10, 10, 5]}>
+          <Model>
             <MeshTransmissionMaterial clearcoat={1} thickness={0.1} anisotropicBlur={0.1} chromaticAberration={0.1} samples={8} resolution={512} />
-          </Model> */}
-        </FigurePhysics>
+          </Model>
+        </FigurePhysics> */}
       </Physics>
       <EffectComposer disableNormalPass multisampling={8}>
         <N8AO distanceFalloff={1} aoRadius={1} intensity={2} />
@@ -70,7 +68,7 @@ function Scene(props) {
         <HueSaturation
           blendFunction={BlendFunction.NORMAL} // blend mode
           hue={0} // hue in radians
-          saturation={0.2} // saturation in radians
+          saturation={0.3} // saturation in radians
         />
       </EffectComposer>
       <Environment resolution={256}>
@@ -92,38 +90,13 @@ function FigurePhysics({ position, children, vec = new THREE.Vector3(), scale, r
     delta = Math.min(0.1, delta)
     api.current?.applyImpulse(vec.copy(api.current.translation()).negate().multiplyScalar(0.2))
   })
-  
+
   return (
     <RigidBody linearDamping={4} angularDamping={1} friction={0.1} position={pos} ref={api} colliders={"ball"}>
-
       {children ? children : <Model {...props} />}
       {accent && <pointLight intensity={3} distance={2.5} color={props.color} />}
     </RigidBody>
   )
-}
-
-const FigureCollider = (number) => {
-  switch (number) {
-    case 1:
-      return <BallCollider args={[1, 1, 1]} />
-    case 2:
-      return <Box />
-    case 3:
-      return <BallCollider args={[1, 1, 1]} />
-    case 4:
-      return <BallCollider args={[1, 1, 1]} />
-
-    case 5:
-      return (
-        <>
-          <CuboidCollider args={[0.38, 1.27, 0.38]} />
-          <CuboidCollider args={[1.27, 0.38, 0.38]} />
-          <CuboidCollider args={[0.38, 0.38, 1.27]} />
-        </>
-      )
-    default:
-      return <BallCollider args={[1, 1, 1]} />
-  }
 }
 
 function Model({ children, color = "white", roughness = 0, number = 1, ...props }) {
@@ -136,7 +109,7 @@ function Model({ children, color = "white", roughness = 0, number = 1, ...props 
     easing.dampC(ref.current.material.color, color, 0.4, delta)
   })
   return (
-    <mesh ref={ref} castShadow receiveShadow scale={1} geometry={figureModel.geometry}>
+    <mesh ref={ref} castShadow receiveShadow scale={1} rotation={[2.3, 4, 1.3]} geometry={figureModel.geometry}>
       <meshStandardMaterial metalness={0.2} roughness={roughness} />
       {children}
     </mesh>

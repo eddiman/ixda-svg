@@ -9,12 +9,12 @@ import "../styles/crt.scss"
 import CanvasExtend from "../Components/CanvasExtend"
 import LoadingComp from "../Components/Loading"
 
-
 export const About = () => {
   const [step, setStep] = useState(-1)
   const [globalAudio, setGlobalAudio] = useState(null)
   const [audioPath, setAudioPath] = useState("/sounds/alttp_intro.mp3")
   const [audioLoop, setAudioLoop] = useState(false)
+  const [showLoading, setShowLoading] = useState(true)
 
   useEffect(() => {
     if (globalAudio) {
@@ -25,6 +25,14 @@ export const About = () => {
     audio.loop = audioLoop
     setGlobalAudio(audio)
   }, [audioPath])
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowLoading(false)
+    }, 3000) // 5000 milliseconds = 5 seconds
+
+    return () => clearTimeout(timeout)
+  }, []) // Run effect only once when component mounts
 
   const playMusic = (audioPath, isLoop) => {
     // Create and play new audio
@@ -187,65 +195,71 @@ export const About = () => {
     )
   }
   return (
-    <CanvasExtend>
-      <Canvas shadows camera={{ position: [-1, 0, 3], near: 0.1, far: 40 }} dpr={1}>
-        <Stats />
-          <LerpCameraFOV isToggled={step == 2} />
-          <color attach="background" args={["#0f1837"]} />
-          <ambientLight intensity={1} color={"#394160"} />
-          <spotLight intensity={0.8} color="white" angle={0.3} penumbra={1} position={[0, 1, 4]} castShadow shadow-mapSize={[512, 512]} />
-          <spotLight intensity={0.2} color="white" angle={0.3} penumbra={1} position={[-2, 3, -3]} castShadow shadow-mapSize={[512, 512]} />
-          <spotLight intensity={0.3} color="white" angle={1} penumbra={1} position={[0, 1.75, 0]} castShadow shadow-mapSize={[512, 512]} />
+    <>
+      {showLoading ? (
+        <LoadingComp />
+      ) : (
+        <CanvasExtend bgColor={"#4B65C6"}>
+          <Canvas shadows camera={{ position: [-1, 0, 3], near: 0.1, far: 40 }} dpr={1}>
+            <Stats />
+            <LerpCameraFOV isToggled={step == 2} />
+            <color attach="background" args={["#0f1837"]} />
+            <ambientLight intensity={1} color={"#394160"} />
+            <spotLight intensity={0.8} color="white" angle={0.3} penumbra={1} position={[0, 1, 4]} castShadow shadow-mapSize={[512, 512]} />
+            <spotLight intensity={0.2} color="white" angle={0.3} penumbra={1} position={[-2, 3, -3]} castShadow shadow-mapSize={[512, 512]} />
+            <spotLight intensity={0.3} color="white" angle={1} penumbra={1} position={[0, 1.75, 0]} castShadow shadow-mapSize={[512, 512]} />
 
-          <spotLight position={[0, 0, 0]} angle={0.5} intensity={1} castShadow />
+            <spotLight position={[0, 0, 0]} angle={0.5} intensity={1} castShadow />
 
-          {/* Add a helper to visualize the spotlight */}
+            {/* Add a helper to visualize the spotlight */}
 
-          <OrbitControls
-            enablePan={false}
-            enableRotate={isSafari ? false : true}
-            maxDistance={4}
-            minDistance={1.7}
-            minAzimuthAngle={-Math.PI / 8.5}
-            maxAzimuthAngle={Math.PI / 4}
-            minPolarAngle={Math.PI / 6}
-            maxPolarAngle={Math.PI - Math.PI / 2.2}
-          />
-          <RoomModel position={[0.1, -0.55, 0.5]} rotation={[0, -0.5, 0]} scale={[1, 1, 1]}>
-            <Html className="content" scale={[0.15, 0.15, 0.15]} rotation-y={0.35} position={[-0.34, 0.52, -0.33]} transform occlude="blending">
-              <div className="tv-container crt-scanlines crt-flicker">
-                {step === -1 ? (
-                  <div className="av-screen">
-                    <span className="channel-label">AV 9 - SPEL</span>
-                    <button className="initiate-btn" onClick={handleStart}>
-                      {" "}
-                      START{" "}
-                    </button>
-                    <div className="white-noise"> </div>
-                  </div>
-                ) : (
-                  <Intro />
-                )}
-              </div>
-            </Html>
-          </RoomModel>
-          {
-            <EffectComposer>
-              <N8AO
-                halfRes={false} // Whether to render at half resolution for performance (true/false)
-                color="#0a027d" // Base color for occlusion
-                aoRadius={0.15} // Radius of the ambient occlusion effect
-                intensity={1.5} // Intensity of the ambient occlusion effect
-                aoSamples={4} // Number of samples used for ambient occlusion calculation
-                denoiseSamples={2} // Number of samples used for denoising (reduce noise)
-              />
+            <OrbitControls
+              enablePan={false}
+              enableRotate={isSafari ? false : true}
+              maxDistance={4}
+              minDistance={1.7}
+              minAzimuthAngle={-Math.PI / 8.5}
+              maxAzimuthAngle={Math.PI / 4}
+              minPolarAngle={Math.PI / 6}
+              maxPolarAngle={Math.PI - Math.PI / 2.2}
+            />
+            <RoomModel position={[0.1, -0.55, 0.5]} rotation={[0, -0.5, 0]} scale={[1, 1, 1]}>
+              <Html className="content" scale={[0.15, 0.15, 0.15]} rotation-y={0.35} position={[-0.34, 0.52, -0.33]} transform occlude="blending">
+                <div className="tv-container crt-scanlines crt-flicker">
+                  {step === -1 ? (
+                    <div className="av-screen">
+                      <span className="channel-label">AV 9 - SPEL</span>
+                      <button className="initiate-btn" onClick={handleStart}>
+                        {" "}
+                        START{" "}
+                      </button>
+                      <div className="white-noise"> </div>
+                    </div>
+                  ) : (
+                    <Intro />
+                  )}
+                </div>
+              </Html>
+            </RoomModel>
+            {
+              <EffectComposer>
+                <N8AO
+                  halfRes={false} // Whether to render at half resolution for performance (true/false)
+                  color="#0a027d" // Base color for occlusion
+                  aoRadius={0.15} // Radius of the ambient occlusion effect
+                  intensity={1.5} // Intensity of the ambient occlusion effect
+                  aoSamples={4} // Number of samples used for ambient occlusion calculation
+                  denoiseSamples={2} // Number of samples used for denoising (reduce noise)
+                />
 
-              <Noise opacity={0.2} />
-              <HueSaturation blendFunction={BlendFunction.NORMAL} hue={0} saturation={0.4} />
-            </EffectComposer>
-          }
-      </Canvas>
-    </CanvasExtend>
+                <Noise opacity={0.2} />
+                <HueSaturation blendFunction={BlendFunction.NORMAL} hue={0} saturation={0.4} />
+              </EffectComposer>
+            }
+          </Canvas>
+        </CanvasExtend>
+      )}
+    </>
   )
 }
 

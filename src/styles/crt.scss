@@ -29,6 +29,8 @@
 
 
 .tv-container {
+  animation: fadeIn 1200ms 500ms forwards;
+  
   .av-screen {
     width: 100%;
     height: 100%;

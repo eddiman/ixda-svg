@@ -30,7 +30,7 @@ export default function CanvasExtend(props) {
   }, []);
 
   return (
-    <div style={{ height: height }} ref={canvasRef}>
+    <div className="canvas-extend" style={{ height: height, backgroundColor: props.bgColor }} ref={canvasRef}>
       {props.children}
     </div>
   );
