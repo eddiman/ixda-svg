@@ -10,8 +10,8 @@
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
 
-	<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-	<!--
+    <!--
+    <link rel="icon" href="/favico.gif" type="image/gif" >
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -40,4 +40,35 @@
     -->
 </body>
 
+
+<script>
+var favicon_images = [
+                    '/favico/fig0.png',
+                    '/favico/fig1.png',
+                    '/favico/fig2.png',
+                    '/favico/fig3.png',
+                    '/favico/fig4.png',
+                ],
+    image_counter = 0; // To keep track of the current image
+
+setInterval(function() {
+    // remove current favicon
+    if(document.querySelector("link[rel='icon']") !== null)
+        document.querySelector("link[rel='icon']").remove();
+    if(document.querySelector("link[rel='shortcut icon']") !== null)
+        document.querySelector("link[rel='shortcut icon']").remove();
+        
+    // add new favicon image
+    document.querySelector("head").insertAdjacentHTML('beforeend', '<link rel="icon" href="' + favicon_images[image_counter] + '" type="image/gif">');
+    
+    // If last image then goto first image
+    // Else go to next image    
+    if(image_counter == favicon_images.length -1)
+        image_counter = 0;
+    else
+        image_counter++;
+}, 1000);
+
+
+</script>
 </html>

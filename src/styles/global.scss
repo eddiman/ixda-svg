@@ -41,35 +41,115 @@ a {
   text-decoration: none; /* no underline */
 }
 
-.about-me {
-  color: white;
-  font-size: 0.5rem;
+@media only screen and (max-width: 600px) {
 }
 
-@media only screen and (max-width: 600px) {
-  .content {
+
+.loading-component {
+  position: fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  z-index:9999;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .figures-inner {
+    display: flex;
+    gap:24px;
+    figure {
+      height: 126px;
+      width: 126px;
+      margin:0;
+    }
+    .cube {
+      background-image: url("../../public/img/logo/Cube.svg");
+      background-size: cover;
+      animation: spring-spin 6s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    }
+    .circle {
+      background-image: url("../../public/img/logo/Circle.svg");
+      background-size: cover;
+      transform-origin: 100% 180%;
+      animation: compress-and-bounce 2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite .25s;
+    }
+    .triangle {
+      background-image: url("../../public/img/logo/Triangle.svg");
+      background-size: cover;
+      transform-style: preserve-3d;
+      animation: rotate-spring 3s ease-in-out infinite .5s;
+
+    }
+    .cross {
+      background-image: url("../../public/img/logo/Cross.svg");
+      background-size: cover;
+      animation: continuous-rotation 5s linear infinite 1s;
+
+    }
+    .donut {
+      background-image: url("../../public/img/logo/Donut.svg");
+      background-size: cover;
+      animation: shrink-rotate-expand 5s linear(0 0%, 0 1.8%, 0.01 3.6%, 0.03 6.35%, 0.07 9.1%, 0.13 11.4%, 0.19 13.4%, 0.27 15%, 0.34 16.1%, 0.54 18.35%, 0.66 20.6%, 0.72 22.4%, 0.77 24.6%, 0.81 27.3%, 0.85 30.4%, 0.88 35.1%, 0.92 40.6%, 0.94 47.2%, 0.96 55%, 0.98 64%, 0.99 74.4%, 1 86.4%, 1 100%) infinite 1.5s;
+      transform-origin: center bottom;
+    }
   }
+  
 }
-.aboutme-bg {
-  background: linear-gradient(-45deg, #9aa9df, #4b65c6, #253674);
-  background-size: 400% 400%;
-  animation: gradient 5s ease infinite;
-  height: 100vh;
+
+@keyframes spring-spin {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(90deg); }
+  50% { transform: rotate(180deg); }
+  75% { transform: rotate(270deg); }
 }
-@keyframes gradient {
+
+@keyframes compress-and-bounce {
+  0% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(-50px) scaleY(0.5); }
+  70% { transform: translateY(-30px) scaleY(0.7); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+
+@keyframes rotate-spring {
+  0% { transform: rotateX(0deg);}
+  50% { transform: rotateX(180deg); }
+  100% { transform: rotateX(360deg); }
+}
+
+@keyframes continuous-rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes continuous-rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes shrink-rotate-expand {
   0% {
-    background-position: 0% 50%;
+    transform-origin: bottom center;
+    transform: scale(1) translateY(0) translateX(0); 
+  }
+
+  25% {
+    transform-origin: bottom center;
+    transform: scale(0.5) translateY(0) translateX(0);
   }
   50% {
-    background-position: 100% 50%;
+    transform-origin: top center;
+    transform: scale(1) translateY(0) translateX(0);
+  }
+  75% {
+    transform-origin: top center;
+    transform: scale(.5) translateY(0) translateX(0);
   }
   100% {
-    background-position: 0% 50%;
+    transform-origin: bottom center;
+    transform: scale(1) translateY(0) translateX(0);
   }
-}
 
-.content {
-  padding: 0;
-  width: 100px;
-  height: 100px;
+
 }

@@ -53,6 +53,18 @@
 
     transform-style: preserve-3d;
     /* transform: rotateX(71deg); */
+    .triangle {
+        position: absolute;
+        width: 3px;
+        height: 2.5px;
+        transform-origin: 7.5px 8px;
+        
+        transform-style: preserve-3d;
+        div {
+            position: absolute;
+            transform-style: preserve-3d;
+        }
+    }   
 }
 .rotatemodeTop {
 	animation: entryTop linear forwards 8s;
@@ -64,14 +76,7 @@
 	animation: entryRight linear forwards 8s;
 }
 
-.triangle {
-	position: absolute;
-	width: 3px;
-	height: 2.5px;
-    transform-origin: 7.5px 8px;
-	
-	transform-style: preserve-3d;
-}
+
 .triangle-one {
     top: 16px;
     left: -7px;
@@ -84,10 +89,7 @@
     top: 30.5px;
     left: 1px;
 }
-.triangle div {
-	position: absolute;
-	transform-style: preserve-3d;
-}
+.triangle 
 .tri-front, .tri-back {
 	border-top: 0.1px solid transparent;
 	border-right: 8px solid transparent;
