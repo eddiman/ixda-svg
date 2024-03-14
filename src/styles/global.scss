@@ -92,8 +92,6 @@ a {
   }
 }
 
-@media only screen and (max-width: 600px) {
-}
 
 nav {
   display: flex;
@@ -189,13 +187,27 @@ nav {
 
   .figures-inner {
     display: flex;
-    gap: 24px;
+    gap: 1.5rem;
     animation: fadeIn 1s ease forwards;
+    @media only screen and (max-width: 475px) {
+      gap: 1rem;
 
+    }
     figure {
+      
       height: 126px;
       width: 126px;
       margin: 0;
+
+      @media only screen and (max-width: 750px) {
+        height: 64px;
+        width: 64px;
+      }
+      @media only screen and (max-width: 475px) {
+        height: 48px;
+        width: 48px;
+      }
+      
     }
     .cube {
       background-image: url("../../public/img/logo/Cube.svg");
