@@ -1,9 +1,9 @@
 import * as THREE from "three"
-import { useRef, useReducer, useMemo } from "react"
+import { useRef, useReducer, useMemo, useState } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { useGLTF, MeshTransmissionMaterial, Environment, Lightformer, Stats } from "@react-three/drei"
+import { useGLTF, PerformanceMonitor, Environment, Lightformer, Stats } from "@react-three/drei"
 import { CuboidCollider, BallCollider, Physics, RigidBody } from "@react-three/rapier"
-import { EffectComposer, N8AO, Noise, Vignette, HueSaturation } from "@react-three/postprocessing"
+import { EffectComposer, N8AO, Noise, Vignette, HueSaturation, DepthOfField } from "@react-three/postprocessing"
 import { BlendFunction } from "postprocessing"
 import { easing } from "maath"
 
@@ -41,30 +41,31 @@ const shuffle = (accent = 0) => [
   { color: "#645299", roughness: 0.1, accent: true, number: 5 },
 ]
 
-const Figures = () => <Scene style={{ borderRadius: 0 }} />
+const Figures = () => <Scene />
 
 function Scene(props) {
   const [accent, click] = useReducer((state) => ++state % accents.length, 0)
   const connectors = useMemo(() => shuffle(accent), [accent])
-  return (
-    <Canvas onClick={click} shadows dpr={1.5} gl={{ antialias: false }} camera={{ position: [0, 0, 15], fov: 30, near: 1, far: 40 }} {...props}>
 
+  const [dpr, setDpr] = useState(1)
+
+  return (
+    <Canvas onClick={click} shadows dpr={[0.8, 1]} gl={{ antialias: false }} camera={{ position: [0, 0, 15], fov: 30, near: 1, far: 40 }} {...props}>
+
+<Stats/>
       <color attach="background" args={["#e2e2e2"]} />
       <ambientLight intensity={0.4} />
       <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
       <Physics /*debug*/ gravity={[0, 0, 0]}>
         <Pointer />
         {connectors.map((props, i) => <FigurePhysics key={i} {...props} />) /* prettier-ignore */}
-       {/*  <FigurePhysics position={[10, 10, 5]}>
-          <Model>
-            <MeshTransmissionMaterial clearcoat={1} thickness={0.1} anisotropicBlur={0.1} chromaticAberration={0.1} samples={8} resolution={512} />
-          </Model>
-        </FigurePhysics> */}
+
       </Physics>
       <EffectComposer disableNormalPass multisampling={8}>
         <N8AO distanceFalloff={1} aoRadius={1} intensity={2} />
         <Noise opacity={0.1} />
         <Vignette eskil={false} offset={0.1} darkness={0.8} />
+        
         <HueSaturation
           blendFunction={BlendFunction.NORMAL} // blend mode
           hue={0} // hue in radians

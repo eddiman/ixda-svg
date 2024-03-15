@@ -7,7 +7,7 @@ import { EffectComposer, N8AO, ToneMapping, Bloom, Noise, DepthOfField, HueSatur
 import { BlendFunction } from "postprocessing"
 import "../styles/crt.scss"
 import CanvasExtend from "../Components/CanvasExtend"
-import LoadingComp from "../Components/Loading"
+import SplashScreen from "../Components/SplashScreen"
 
 export const About = () => {
   const [step, setStep] = useState(-1)
@@ -29,7 +29,7 @@ export const About = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLoading(false)
-    }, 3000) // 5000 milliseconds = 5 seconds
+    }, 2000) // 5000 milliseconds = 5 seconds
 
     return () => clearTimeout(timeout)
   }, []) // Run effect only once when component mounts
@@ -197,7 +197,7 @@ export const About = () => {
   return (
     <>
       {showLoading ? (
-        <LoadingComp />
+        <SplashScreen color={1} selected={true}/>
       ) : (
         <CanvasExtend bgColor={"#4B65C6"}>
           <Canvas shadows camera={{ position: [-1, 0, 3], near: 0.1, far: 40 }} dpr={1}>
