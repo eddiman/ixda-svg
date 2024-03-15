@@ -29,7 +29,7 @@ export const About = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLoading(false)
-    }, 2000) // 5000 milliseconds = 5 seconds
+    }, 3000) // 5000 milliseconds = 5 seconds
 
     return () => clearTimeout(timeout)
   }, []) // Run effect only once when component mounts

@@ -51,21 +51,19 @@ function Scene(props) {
 
   return (
     <Canvas onClick={click} shadows dpr={[0.8, 1]} gl={{ antialias: false }} camera={{ position: [0, 0, 15], fov: 30, near: 1, far: 40 }} {...props}>
-
-<Stats/>
+      <Stats />
       <color attach="background" args={["#e2e2e2"]} />
       <ambientLight intensity={0.4} />
       <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
       <Physics /*debug*/ gravity={[0, 0, 0]}>
         <Pointer />
         {connectors.map((props, i) => <FigurePhysics key={i} {...props} />) /* prettier-ignore */}
-
       </Physics>
       <EffectComposer disableNormalPass multisampling={8}>
         <N8AO distanceFalloff={1} aoRadius={1} intensity={2} />
         <Noise opacity={0.1} />
         <Vignette eskil={false} offset={0.1} darkness={0.8} />
-        
+
         <HueSaturation
           blendFunction={BlendFunction.NORMAL} // blend mode
           hue={0} // hue in radians
