@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react"
 import * as THREE from "three"
 import SplashScreen from "../Components/SplashScreen"
-import AnimatedLink from "../Components/AnimatedLink"
-import Figures from "../Containers/Figures"
-
+import NavBar from "../Components/NavBar" 
+import Figures from "../Components/Figures"
 
 const rfs = THREE.MathUtils.randFloatSpread
 
@@ -20,13 +19,7 @@ export const Home = () => {
   return (
     <>
       {showLoading ? <SplashScreen /> : ""}
-        <nav>
-          <AnimatedLink styleClass="color-1" to={"/about"} animationClass={"selected"}>About</AnimatedLink>
-          <AnimatedLink styleClass="color-2" to={"/"} animationClass={"selected"}>Work</AnimatedLink>
-          <a className="color-3">Hobby</a>
-          <a className="color-4">Photography</a>
-          <a className="color-5">Contact</a>
-        </nav>
+      <NavBar />
       <div className="view-screen fade-in">
         <Figures />
       </div>

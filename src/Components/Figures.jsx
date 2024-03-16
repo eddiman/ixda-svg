@@ -51,7 +51,7 @@ function Scene(props) {
 
   return (
     <Canvas onClick={click} shadows dpr={[0.8, 1]} gl={{ antialias: false }} camera={{ position: [0, 0, 15], fov: 30, near: 1, far: 40 }} {...props}>
-      <Stats />
+      
       <color attach="background" args={["#e2e2e2"]} />
       <ambientLight intensity={0.4} />
       <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
