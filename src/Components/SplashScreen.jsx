@@ -11,8 +11,8 @@ const SplashScreen = ({selected, color, ...props}) => {
         <figure className={`cube ${selected ? "selected" : ""}` }/>
         <figure className={`circle ${selected ? "selected" : ""}`}/>
         <figure className={`triangle ${selected ? "selected" : ""}`}/>
-        <figure className={`cross ${selected ? "selected" : ""}`}/>
         <figure className={`donut ${selected ? "selected" : ""}`}/>
+        <figure className={`cross ${selected ? "selected" : ""}`}/>
         </div>
         {selected ? <div className={`overlay ${"color-" + color}`}> </div> : ""}
     </div>

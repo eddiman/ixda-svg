@@ -77,7 +77,22 @@ export const About = () => {
       </div>
     )
   }
-  const Intro = () => {
+
+  const FlickerCrtScreen = () => {
+    return(
+        <div className="av-screen">
+          <span className="channel-label">AV 9 - SPEL</span>
+          <button className="initiate-btn" onClick={handleStart}>
+            {" "}
+            START{" "}
+          </button>
+          <div className="white-noise"> </div>
+        </div> 
+
+    )
+  }
+
+  const ZeldaScreen = () => {
     const storyEl = React.useRef(null)
     const [typedComplete, setTypedComplete] = useState(false)
     const typedRef = useRef(null)
@@ -237,18 +252,7 @@ export const About = () => {
               <RoomModel position={[0.1, -0.55, 0.5]} rotation={[0, -0.5, 0]} scale={[1, 1, 1]}>
                 <Html className="content" scale={[0.15, 0.15, 0.15]} rotation-y={0.35} position={[-0.34, 0.52, -0.33]} transform occlude="blending">
                   <div className="tv-container crt-scanlines crt-flicker">
-                    {step === -1 ? (
-                      <div className="av-screen">
-                        <span className="channel-label">AV 9 - SPEL</span>
-                        <button className="initiate-btn" onClick={handleStart}>
-                          {" "}
-                          START{" "}
-                        </button>
-                        <div className="white-noise"> </div>
-                      </div>
-                    ) : (
-                      <Intro />
-                    )}
+                    {step === -1 ? <FlickerCrtScreen/> : <ZeldaScreen />}
                   </div>
                 </Html>
               </RoomModel>
@@ -276,10 +280,7 @@ export const About = () => {
 }
 
 const RoomModel = memo(({ position, scale, rotation, ...props }) => {
-  // Load the 3D model
   const { scene } = useGLTF("/room.gltf")
-
-  // Load the texture
 
   return (
     <primitive position={position} rotation={rotation} scale={scale} object={scene}>
