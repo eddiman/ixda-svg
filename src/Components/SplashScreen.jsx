@@ -5,8 +5,8 @@ import {Html } from "@react-three/drei"
 const SplashScreen = ({selected, color, ...props}) => {
   
   return (
-    <div className={`loading-component ${selected ? "color-" + color : ""}`}>
-        <div className="figures-inner">
+    <div className={`loading-component`} style={selected ? {} : {backgroundColor : "white"}}>
+        <div className={`figures-inner`} >
 
         <figure className={`cube ${selected ? "selected" : ""}` }/>
         <figure className={`circle ${selected ? "selected" : ""}`}/>
@@ -14,6 +14,7 @@ const SplashScreen = ({selected, color, ...props}) => {
         <figure className={`cross ${selected ? "selected" : ""}`}/>
         <figure className={`donut ${selected ? "selected" : ""}`}/>
         </div>
+        {selected ? <div className={`overlay ${"color-" + color}`}> </div> : ""}
     </div>
   )
 }
