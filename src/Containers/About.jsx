@@ -18,9 +18,7 @@ export const About = () => {
   const [showLoading, setShowLoading] = useState(true)
 
   useEffect(() => {
-    if (globalAudio) {
-      globalAudio.pause()
-    }
+    stopMusic();
 
     const audio = new Audio(audioPath)
     audio.loop = audioLoop
@@ -40,6 +38,12 @@ export const About = () => {
     setAudioPath(audioPath)
     setAudioLoop(isLoop)
     globalAudio.play()
+  }
+
+  const stopMusic = () => {
+    if (globalAudio) {
+      globalAudio.pause()
+    }
   }
 
   const handleStart = () => {
@@ -201,7 +205,10 @@ export const About = () => {
         <SplashScreen color={1} selected={true} />
       ) : (
         <>
-          <NavBar activeNo={1}/>
+          <NavBar
+            activeNo={1}
+            handleCallback={() => {stopMusic()}}
+          />
           <CanvasExtend bgColor={"#4B65C6"}>
             <Canvas shadows camera={{ position: [-1, 0, 3], near: 0.1, far: 40 }} dpr={1}>
               <Stats />
@@ -214,7 +221,8 @@ export const About = () => {
 
               <spotLight position={[0, 0, 0]} angle={0.5} intensity={1} castShadow />
 
-              {/* Add a helper to visualize the spotlight */}
+              {// Add a helper to visualize the spotlight
+              }
 
               <OrbitControls
                 enablePan={false}
