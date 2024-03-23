@@ -3,7 +3,7 @@ import React from 'react';
 import AnimatedLink from './AnimatedLink'; // Assuming you have the AnimatedLink component defined in a separate file
 
 const NavBar = ({activeNo, handleCallback, ...props}) => {
-  console.log(handleCallback);
+
   
   return (
     <nav>

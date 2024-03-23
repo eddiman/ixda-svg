@@ -1,5 +1,5 @@
 import * as THREE from "three"
-import { useRef, useReducer, useMemo, useState } from "react"
+import { useRef, useReducer, useMemo, useState, useEffect } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { useGLTF, PerformanceMonitor, Environment, Lightformer, Stats } from "@react-three/drei"
 import { CuboidCollider, BallCollider, Physics, RigidBody } from "@react-three/rapier"
@@ -8,6 +8,10 @@ import { BlendFunction } from "postprocessing"
 import { easing } from "maath"
 
 const accents = ["white", "#f2d39a", "#7385c4", "#e9b28f", "#aad6b8", "#8a7faa"]
+
+import { useAudio } from "../Components/AudioContext"
+
+
 const shuffle = (accent = 0) => [
   { color: accents[accent], roughness: 0.1, number: 1 },
   { color: accents[accent], roughness: 0.75, number: 2 },
@@ -44,14 +48,24 @@ const shuffle = (accent = 0) => [
 const Figures = () => <Scene />
 
 function Scene(props) {
-  const [accent, click] = useReducer((state) => ++state % accents.length, 0)
-  const connectors = useMemo(() => shuffle(accent), [accent])
+  /* const [accent, setAccent] = useState(0) */
+  const { playAudio, pauseAudio } = useAudio();
+  const [accent, dispatch] = useReducer((state) => ++state % accents.length, 0);
 
+
+  const connectors = useMemo(() => shuffle(accent), [accent])
+dispatch
+  const handleClick = () => {
+    dispatch();
+    let src = "/sounds/home/piano_"+ accent +".mp3"
+    playAudio(src, false)
+    console.log(src);
+    
+  }
   const [dpr, setDpr] = useState(1)
 
   return (
-    <Canvas onClick={click} shadows dpr={[0.8, 1]} gl={{ antialias: false }} camera={{ position: [0, 0, 15], fov: 30, near: 1, far: 40 }} {...props}>
-      
+    <Canvas onClick={handleClick} shadows dpr={[0.8, 1]} gl={{ antialias: false }} camera={{ position: [0, 0, 15], fov: 30, near: 1, far: 40 }} {...props}>
       <color attach="background" args={["#e2e2e2"]} />
       <ambientLight intensity={0.4} />
       <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />

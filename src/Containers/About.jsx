@@ -9,21 +9,14 @@ import "../styles/about.scss"
 import NavBar from "../Components/NavBar"
 import CanvasExtend from "../Components/CanvasExtend"
 import SplashScreen from "../Components/SplashScreen"
+import { useAudio } from "../Components/AudioContext"
+
 
 export const About = () => {
   const [step, setStep] = useState(-1)
-  const [globalAudio, setGlobalAudio] = useState(null)
-  const [audioPath, setAudioPath] = useState("/sounds/alttp_intro.mp3")
-  const [audioLoop, setAudioLoop] = useState(false)
   const [showLoading, setShowLoading] = useState(true)
+  const { playAudio, pauseAudio } = useAudio();
 
-  useEffect(() => {
-    stopMusic();
-
-    const audio = new Audio(audioPath)
-    audio.loop = audioLoop
-    setGlobalAudio(audio)
-  }, [audioPath])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -33,21 +26,10 @@ export const About = () => {
     return () => clearTimeout(timeout)
   }, []) // Run effect only once when component mounts
 
-  const playMusic = (audioPath, isLoop) => {
-    // Create and play new audio
-    setAudioPath(audioPath)
-    setAudioLoop(isLoop)
-    globalAudio.play()
-  }
-
-  const stopMusic = () => {
-    if (globalAudio) {
-      globalAudio.pause()
-    }
-  }
 
   const handleStart = () => {
     setStep(0)
+
   }
 
   const Triforce = (props) => {
@@ -99,7 +81,7 @@ export const About = () => {
 
     useEffect(() => {
       if (step == 0) {
-        playMusic("/sounds/alttp_intro.mp3", false)
+        playAudio("/sounds/about/alttp_intro.mp3", false)
 
         const timer = setTimeout(() => {
           setStep(1)
@@ -111,7 +93,7 @@ export const About = () => {
 
     useEffect(() => {
       if (step == 2) {
-        playMusic("/sounds/alttp_story.mp3", true)
+        playAudio("/sounds/about/alttp_story.mp3", true)
         typedRef.current = new Typed(storyEl.current, {
           strings: [
             "Amidst the scenic vistas of Stavanger, I'm a certified UX designer and developer shaping seamless experiences at Olavstoppen.",
@@ -222,7 +204,7 @@ export const About = () => {
         <>
           <NavBar
             activeNo={1}
-            handleCallback={() => {stopMusic()}}
+            handleCallback={() => {pauseAudio()}}
           />
           <CanvasExtend bgColor={"#4B65C6"}>
             <Canvas shadows camera={{ position: [-1, 0, 3], near: 0.1, far: 40 }} dpr={1}>
@@ -281,7 +263,7 @@ export const About = () => {
 
 const RoomModel = memo(({ position, scale, rotation, ...props }) => {
   const { scene } = useGLTF("/room.gltf")
-
+  
   return (
     <primitive position={position} rotation={rotation} scale={scale} object={scene}>
       {" "}

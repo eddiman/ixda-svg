@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom" // Assuming you're using React Ro
 function AnimatedLink({ isActive, to, children, animationClass, callback, styleClass }) {
   const navigate = useNavigate() // useNavigate hook for navigation
   const [animationComplete, setAnimationComplete] = useState(false)
+  
+
 
   const handleClick = () => {
     // Apply the animation class
