@@ -1,23 +1,33 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom" // Assuming you're using React Router for navigation
+import { useAudio } from "../Components/AudioContext"
 
-function AnimatedLink({ isActive, to, children, animationClass, callback, styleClass }) {
+function AnimatedLink({ isActive = false, to, children, animationClass, callback, styleClass, number }) {
   const navigate = useNavigate() // useNavigate hook for navigation
   const [animationComplete, setAnimationComplete] = useState(false)
-  
+  const { playAudio } = useAudio();
 
 
   const handleClick = () => {
     // Apply the animation class
-    console.log(callback);
     
-    if(callback !== undefined) {
-      callback();
+    if(!isActive) {
+      let src = "/sounds/home/piano_"+ number +".mp3"
+
+      setAnimationComplete(true)
+      
+      const timeout = setTimeout(() => {
+        playAudio(src, false)
+      }, 300) // 5000 milliseconds = 5 seconds
+  
+      return () => clearTimeout(timeout)
     }
-    setAnimationComplete(true)
   }
 
   const handleAnimationEnd = () => {
+    if(callback !== undefined) {
+      callback();
+    }
     // After animation is complete, navigate to the specified location
     navigate(to)
   }

@@ -49,9 +49,8 @@ const Figures = () => <Scene />
 
 function Scene(props) {
   /* const [accent, setAccent] = useState(0) */
-  const { playAudio, pauseAudio } = useAudio();
+  const { playAudio } = useAudio();
   const [accent, dispatch] = useReducer((state) => ++state % accents.length, 0);
-
 
   const connectors = useMemo(() => shuffle(accent), [accent])
 dispatch
@@ -60,7 +59,6 @@ dispatch
     let src = "/sounds/home/piano_"+ accent +".mp3"
     playAudio(src, false)
     console.log(src);
-    
   }
   const [dpr, setDpr] = useState(1)
 
@@ -100,8 +98,8 @@ function FigurePhysics({ position, children, vec = new THREE.Vector3(), scale, r
   const api = useRef()
   const pos = useMemo(() => position || [r(10), r(10), r(10)], [])
   useFrame((state, delta) => {
-    delta = Math.min(0.1, delta)
-    api.current?.applyImpulse(vec.copy(api.current.translation()).negate().multiplyScalar(0.2))
+    delta = Math.min(1, delta)
+    api.current?.applyImpulse(vec.copy(api.current.translation()).negate().multiplyScalar(0.1))
   })
 
   return (
@@ -119,7 +117,8 @@ function Model({ children, color = "white", roughness = 0, number = 1, ...props 
   let figureModel = getObjectByKey(nodes, "shape_" + number)
 
   useFrame((state, delta) => {
-    easing.dampC(ref.current.material.color, color, 0.4, delta)
+    easing.dampC(ref.current.material.color, color, .7, delta)
+    
   })
   return (
     <mesh ref={ref} castShadow receiveShadow scale={1} rotation={[2.3, 4, 1.3]} geometry={figureModel.geometry}>

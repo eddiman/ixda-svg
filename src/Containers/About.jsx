@@ -29,6 +29,8 @@ export const About = () => {
 
   const handleStart = () => {
     setStep(0)
+    playAudio("/sounds/about/alttp_intro.mp3", false)
+
 
   }
 
@@ -81,8 +83,6 @@ export const About = () => {
 
     useEffect(() => {
       if (step == 0) {
-        playAudio("/sounds/about/alttp_intro.mp3", false)
-
         const timer = setTimeout(() => {
           setStep(1)
         }, 3000)
@@ -93,7 +93,6 @@ export const About = () => {
 
     useEffect(() => {
       if (step == 2) {
-        playAudio("/sounds/about/alttp_story.mp3", true)
         typedRef.current = new Typed(storyEl.current, {
           strings: [
             "Amidst the scenic vistas of Stavanger, I'm a certified UX designer and developer shaping seamless experiences at Olavstoppen.",
@@ -134,6 +133,7 @@ export const About = () => {
         setStep(0)
       } else {
         setStep(2)
+        playAudio("/sounds/about/alttp_story.mp3", true)
       }
     }
 
