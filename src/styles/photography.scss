@@ -1,0 +1,15 @@
+.photo-grid-main-container {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); // Always 20 items per row
+  grid-gap: 10px;
+  padding: 10px;
+  margin: 0 auto;
+  overflow: scroll; // Allows horizontal scrolling if items overflow
+  height: 100%;
+
+  .photo-grid-item {
+    height: 300px;
+    width: 400px;
+    background-color: lighten(red, 40);
+  }
+}
