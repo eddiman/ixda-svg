@@ -11,6 +11,21 @@
   box-sizing: border-box;
 }
 
+:root {
+  --color-1: #4b65c6;
+  --color-2: #f5c163;
+  --color-3: #f19a62;
+  --color-4: #72cd90;
+  --color-5: #645299;
+
+  --z-index-1: 1;
+--z-index-2: 10;
+--z-index-3: 100;
+--z-index-4: 1000;
+--z-index-5: 10000;
+--z-index-6: 99999;
+}
+
 html,
 body,
 #root {
@@ -87,7 +102,7 @@ nav {
   flex-direction: row;
   flex-wrap: wrap;
   position: absolute;
-  z-index: 1;
+  z-index: var(--z-index-6);
   left: 0;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.1);
@@ -112,27 +127,27 @@ nav {
   }
   .color-1 {
     &:before {
-      background: #4b65c6;
+      background: var(--color-1);
     }
   }
   .color-2 {
     &:before {
-      background: #f5c163;
+      background: var(--color-2);
     }
   }
   .color-3 {
     &:before {
-      background: #f19a62;
+      background: var(--color-3);
     }
   }
   .color-4 {
     &:before {
-      background: #72cd90;
+      background: var(--color-4);
     }
   }
   .color-5 {
     &:before {
-      background: #645299;
+      background: var(--color-5);
     }
   }
   a {
@@ -205,6 +220,11 @@ nav {
   }
 }
 
+.draggable-scroll-container{
+  height: 100%;
+
+}
+
 .loading-component {
   position: fixed;
   top: 0;
@@ -217,19 +237,19 @@ nav {
   align-items: center;
   animation: fadeOut 1s ease forwards 2s;
   &.color-1 {
-    background-color: #4b65c6;
+    background-color: var(--color-1);
   }
   &.color-2 {
-    background-color: #f5c163;
+    background-color: var(--color-2);
   }
   &.color-3 {
-    background-color: #f19a62;
+    background-color: var(--color-3);
   }
   &.color-4 {
-    background-color: #72cd90;
+    background-color: var(--color-4);
   }
   &.color-5 {
-    background-color: #645299;
+    background-color: var(--color-5);
   }
 
   .overlay {
@@ -241,19 +261,19 @@ nav {
     background-color: white;
     mix-blend-mode: hard-light;
     &.color-1 {
-      background-color: #4b65c6;
+      background-color: var(--color-1);
     }
     &.color-2 {
-      background-color: #f5c163;
+      background-color: var(--color-2);
     }
     &.color-3 {
-      background-color: #f19a62;
+      background-color: var(--color-3);
     }
     &.color-4 {
-      background-color: #72cd90;
+      background-color: var(--color-4);
     }
     &.color-5 {
-      background-color: #645299;
+      background-color: var(--color-5);
     }
   }
 
@@ -434,15 +454,6 @@ nav {
   }
   100% {
     transform: rotateX(360deg);
-  }
-}
-
-@keyframes continuous-rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
   }
 }
 

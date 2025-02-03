@@ -1,15 +1,78 @@
+#root {
+  background-color: #ffffff;
+  background-color: var(--color-4);
+}
+
 .photo-grid-main-container {
   display: grid;
   grid-template-columns: repeat(10, 1fr); // Always 20 items per row
-  grid-gap: 10px;
-  padding: 10px;
+  grid-gap: 48px;
+  padding: 24px;
   margin: 0 auto;
-  overflow: scroll; // Allows horizontal scrolling if items overflow
-  height: 100%;
+  -ms-overflow-style: none; // Internet Explorer 10+
+  scrollbar-width: none; // Firefox
 
-  .photo-grid-item {
-    height: 300px;
-    width: 400px;
-    background-color: lighten(red, 40);
+  &::-webkit-scrollbar {
+    display: none; // WebKit browsers
   }
+.photo-grid-item-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: lighten(rgba(#72cd90, 0.4), 10%);
+    animation: fadeIn 300ms forwards;
+    z-index: var(--z-index-2);
+}
+  .photo-grid-item {
+    height: 400px;
+    width: 400px;
+    background-color: white;
+    display: flex;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition:  transform 0.1s ease-out, box-shadow 0.1s ease-out;
+    perspective: 1000px;
+    cursor: pointer;
+    position: relative;
+    z-index: var(--z-index-1);
+    border: none;
+
+    &:focus-within {
+      //outline: 2px solid #a2a2a2;
+    }
+  
+    .photo-grid-img {
+      background-color: gray;
+      aspect-ratio: 4 / 3;
+      transition: transform 0.3s ease-in-out;
+  
+      &.portrait {
+        height: 66%;
+        width: 100%;
+      }
+      &.landscape {
+        width: 66%;
+        height: 100%;
+      }
+    }
+  
+    // Selected state - Enlarges & moves others aside
+    &.selected {
+      transform: scale(1.5);
+      z-index: var(--z-index-3);
+      position: relative;
+      &:focus-within {
+        outline: none
+      }
+    }
+
+    
+
+  }
+  
 }

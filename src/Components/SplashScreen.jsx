@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react"
-import {Html } from "@react-three/drei"
 
 
 const SplashScreen = ({selected, color, ...props}) => {
