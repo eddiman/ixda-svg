@@ -1,51 +1,68 @@
 import { useState, useEffect, useRef } from "react";
-import * as THREE from "three";
-import SplashScreen from "../Components/SplashScreen";
-import PhotoGridItem from "../Components/PhotoGridItem";
-import NavBar from "../Components/NavBar";
-import DraggableScrollContainer from "../Components/DraggableScrollContainer";
+
 import "../styles/photography.scss";
-import { useDraggable } from "react-use-draggable-scroll";
+import PhotoDeck from "../Components/PhotoDeck";
+import { fetchAlbums } from "../api/fetchAlbums";
+import SplashScreen from "../Components/SplashScreen";
+import NavBar from "../Components/NavBar";
+import AnimatedButton from "../Components/AnimatedButton";
 
-const GRID_ITEMS = 100;
-const PASTEL_COLORS = [
-  "pink",
-  "purple",
-  "indigo",
-  "blue",
-  "cyan",
-  "teal",
-  "green",
-  "lime",
-  "yellow",
-  "orange",
-];
-const PhotoGrid = ({ isLandscape }) => {
-  const [selectedIndex, setSelectedIndex] = useState(null);
+
+const AlbumsList = () => {
+  const [albums, setAlbums] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const scrollRef = useRef(null);
+  const scrollViewWidth = (dir) => {
+    // Check if the ref is valid
+    if (scrollRef.current) {
+      console.log("Scrolling right...");
+      console.log(scrollRef.current);
+      console.log(dir);
+      
+      if (dir === "left") {
+        scrollRef.current.scrollLeft -= window.innerWidth; // Scroll by the width of the viewport
+      } else {
+        scrollRef.current.scrollLeft += window.innerWidth; // Scroll by the width of the viewport
+      }
+    }
+  };
+
+  useEffect(() => {
+    const getAlbums = async () => {
+      const data = await fetchAlbums();
+      setAlbums(data);
+      setLoading(false);
+    };
+    getAlbums();
+  }, []);
+
+  useEffect(() => {
+    // Ensure the scroll event listener is added only when the component is mounted and albums are loaded
+    if (!loading && scrollRef.current) {
+      // Optionally, you can log here to check when the ref and albums are ready
+      console.log("Albums loaded, setting up scroll handler.");
+    }
+  }, [loading, scrollRef]);  // Dependency ensures this effect runs only after loading is complete
+
+  if (loading) return <p>Loading albums...</p>;
+
   return (
-    <DraggableScrollContainer enableDragScroll={true}>
-      <main className="photo-grid-main-container">
-        {Array.from({ length: GRID_ITEMS }).map((_, index) => {
-const isLandscape = Math.random() < 1
-          return (
-            <PhotoGridItem
-              key={index}
-              index={index}
-              isLandscape={isLandscape}
-              isSelected={selectedIndex === index}
-              selectedIndex={selectedIndex}
-              onSelect={() =>
-                setSelectedIndex(index === selectedIndex ? null : index)
-              }
-            />
-          );
-        })}
-      </main>
-    </DraggableScrollContainer>
+    <div className="photo-deck-grid-list" ref={scrollRef}>
+      {albums.map((album, index) => {
+        const imgUrls = album.photos || []; // Ensure it's always an array
+        
+        return (
+          <div className="photo-deck-grid-item" key={index} >
+            <h1>{album.name}</h1>
+            {index !== 0 ? <AnimatedButton className="color-4 scroll-left" onClick={()=> scrollViewWidth("left")}  >{"<"}</AnimatedButton>: ""}
+            {index !== albums.length-1 ? <AnimatedButton className="color-4 scroll-right" onClick={() => scrollViewWidth("right")}  >{">"}</AnimatedButton>: ""}
+            <PhotoDeck cards={imgUrls} />
+          </div>
+        );
+      })}
+    </div>
   );
-}
-
-//item.style.boxShadow = `${-rotateY * 5}px ${rotateX * 5}px 40px rgba(40, 124, 70, .2)`;
+};
 
 export const Photography = () => {
   const [showLoading, setShowLoading] = useState(true);
@@ -53,31 +70,18 @@ export const Photography = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLoading(false);
-    }, 300); // 300 milliseconds
+    }, 3000); // 5000 milliseconds = 5 seconds
     return () => clearTimeout(timeout);
   }, []); // Run effect only once when component mounts
 
-  useEffect(() => {
-    // Center the user in the middle of the photo grid
-    const container = document.querySelector(".draggable-scroll-container");
-    if (container) {
-      container.scrollTo({
-        top: container.scrollHeight / 2 - container.clientHeight / 2,
-        left: container.scrollWidth / 2 - container.clientWidth / 2,
-      });
-    }
-  }, [showLoading]);
   return (
     <>
-      {showLoading ? (
-        <SplashScreen color={4} selected={true} />
-      ) : (
-        <>
-          <NavBar />
-          <PhotoGrid isLandscape={Math.random() < 0.3} />
-        </>
-      )}
+      {showLoading ? <SplashScreen color={4} selected={true} /> : ""}
+      <NavBar activeNo={4} />
+      <div className={"photography-container fade-in"}>
+        <AlbumsList />
+        <div className="noise-overlay"></div>
+      </div>
     </>
   );
 };
-export default Photography;

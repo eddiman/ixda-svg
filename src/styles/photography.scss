@@ -1,78 +1,143 @@
-#root {
-  background-color: #ffffff;
-  background-color: var(--color-4);
+.photography-container {
+  background-color: var(--color-4-dark);
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  overflow: hidden; /* Prevents vertical scrolling */
 }
 
-.photo-grid-main-container {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr); // Always 20 items per row
-  grid-gap: 48px;
-  padding: 24px;
-  margin: 0 auto;
-  -ms-overflow-style: none; // Internet Explorer 10+
-  scrollbar-width: none; // Firefox
+.photo-deck-grid-list {
+  display: flex;
+  overflow-x: auto; /* Enables horizontal scrolling */
+  overflow-y: hidden; /* Prevents vertical scrolling */
+  scroll-snap-type: x mandatory; /* Smooth snapping between images */
+  width: 100vw;
+  height: 100vh;
+  scroll-behavior: smooth; /* Smooth scroll transition */
 
-  &::-webkit-scrollbar {
-    display: none; // WebKit browsers
-  }
-.photo-grid-item-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: lighten(rgba(#72cd90, 0.4), 10%);
-    animation: fadeIn 300ms forwards;
-    z-index: var(--z-index-2);
-}
-  .photo-grid-item {
-    height: 400px;
-    width: 400px;
-    background-color: white;
+  .photo-deck-grid-item {
+    position: relative;
+    overflow: hidden;
+    min-width: 100vw;
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    padding: 12px;
     justify-content: center;
     align-items: center;
-    border-radius: 4px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    transition:  transform 0.1s ease-out, box-shadow 0.1s ease-out;
-    perspective: 1000px;
-    cursor: pointer;
-    position: relative;
-    z-index: var(--z-index-1);
-    border: none;
+    scroll-snap-align: center; /* Ensures each image snaps into view */
 
-    &:focus-within {
-      //outline: 2px solid #a2a2a2;
-    }
-  
-    .photo-grid-img {
-      background-color: gray;
-      aspect-ratio: 4 / 3;
-      transition: transform 0.3s ease-in-out;
-  
-      &.portrait {
-        height: 66%;
-        width: 100%;
-      }
-      &.landscape {
-        width: 66%;
-        height: 100%;
-      }
-    }
-  
-    // Selected state - Enlarges & moves others aside
-    &.selected {
-      transform: scale(1.5);
-      z-index: var(--z-index-3);
-      position: relative;
-      &:focus-within {
-        outline: none
-      }
+    h1 {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
     }
 
-    
-
+    .scroll-left {
+      position: absolute;
+      left: 1rem;
+      top: 10rem;
+    }
+    .scroll-right {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
   }
-  
+}
+
+.deck-container {
+  @media (max-width: 768px) {
+    --deck-size: 300px;
+    --deck-img-size: 270px;
+  }
+  @media (min-width: 769px) {
+    --deck-size: 500px;
+    --deck-img-size: 470px;
+  }
+  width: var(--deck-size);
+  height: var(--deck-size);
+  position: relative;
+  transition: transform 300ms;
+  pointer-events: none; // Prevents pointer events on the deck, top-card sets pointer events to all, so only that one is clickable
+
+  .top-card { 
+    pointer-events: all;
+    
+  }
+  .deck {
+    position: absolute;
+    width: var(--deck-size);
+    height: var(--deck-size);
+    will-change: transform;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &:hover {
+    .top-card {
+      transform: perspective(750px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)
+        scale(1) translateY(-20px) !important;
+    }
+  }
+  .is-down {
+    cursor: grabbing;
+    .deck-inner {
+      transform: perspective(750px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)
+        scale(1.4) !important;
+      .deck-inner-image-container img {
+        //filter: invert(0);
+      }
+    }
+  }
+
+  .deck-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    touch-action: none;
+    width: 100vw;
+    height: 100vh;
+    transition: transform 300ms;
+
+    padding: 24px;
+    max-width: var(--deck-size);
+    max-height: var(--deck-size);
+    will-change: transform;
+    border: 1px solid rgb(225, 225, 225);
+    border-radius: 6px;
+    box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 0.4),
+      0 10px 10px -10px rgba(50, 50, 73, 0.3);
+    overflow: hidden; /* Ensures rounded corners apply */
+    .deck-inner-image-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid rgb(214, 214, 214);
+      border-radius: 6px;
+      box-shadow: inset 0px 0px 4px 3px rgba(0, 0, 0, 0.2);
+    }
+    .deck-inner-image-container img {
+      display: block;
+      position: relative;
+      max-width: var(--deck-img-size);
+      max-height: var(--deck-img-size);
+      width: auto;
+      height: auto;
+      //filter: invert(1);
+      z-index: -1;
+      transition: filter 300ms;
+      user-select: none;
+      pointer-events: none;
+      outline: 1px solid rgb(112, 112, 112);
+      outline-offset: -1px;
+      border-radius: 5px;
+    }
+  }
 }

@@ -29,7 +29,8 @@ export const AudioProvider = ({ children }) => {
     if (audio) {
       audio.pause(); // Stop any audio that's currently playing
     }
-
+    console.log("Playing audio...");
+    
     setAudioSrc(url); // This will trigger the effect to load and play the new audio
     setAudio((currentAudio) => {
       if (currentAudio) {
