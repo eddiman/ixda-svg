@@ -40,8 +40,10 @@ function PhotoDeck({ cards }) {
       const nextDeckItem = deckRefs.current[index - 1];
       if (down && deckItem != null) {
         deckItem.classList.add("is-down");
+        playAudio("/sounds/photography/paper.mp3", false);
         
       } else {
+        stopAudio();
         deckItem.classList.remove("is-down");
         deckItem.classList.remove("top-card");
 
@@ -52,7 +54,6 @@ function PhotoDeck({ cards }) {
       api.start((i) => {
         if (index !== i) return; // We're only interested in changing spring-data for the current spring
         const isGone = gone.has(index);
-        playAudio("/sounds/photography/paper.mp3", true);
         const x = isGone ? (300 + window.innerWidth) * dir : down ? mx : 15; // When a card is gone it flys out left or right, otherwise goes back to zero
         const rot = mx / 100 + (isGone ? dir * 30 * velocity : 0); // How much the card tilts, flicking it harder makes it rotate faster
         const scale = down ? 1.4 : 1; // Active cards lift up a bit

@@ -15,7 +15,7 @@ import { useAudio } from "../Components/AudioContext"
 export const About = () => {
   const [step, setStep] = useState(-1)
   const [showLoading, setShowLoading] = useState(true)
-  const { playAudio, pauseAudio } = useAudio();
+  const { playAudio, stopAudio } = useAudio();
 
 
   useEffect(() => {
@@ -130,7 +130,7 @@ export const About = () => {
           typedRef.current.destroy()
           setTypedComplete(false)
         }
-        setStep(0)
+        handleStart();
       } else {
         setStep(2)
         playAudio("/sounds/about/alttp_story.mp3", true)
@@ -204,7 +204,7 @@ export const About = () => {
         <>
           <NavBar
             activeNo={1}
-            handleCallback={() => {pauseAudio()}}
+            handleCallback={() => {stopAudio()}}
           />
           <CanvasExtend bgColor={"#4B65C6"}>
             <Canvas shadows camera={{ position: [-1, 0, 3], near: 0.1, far: 40 }} dpr={1}>
