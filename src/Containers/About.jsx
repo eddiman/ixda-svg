@@ -1,57 +1,75 @@
-import React, { useState, useEffect, useRef, memo, Suspense } from "react"
-import { Canvas, useThree } from "@react-three/fiber"
-import { isSafari } from "react-device-detect"
-import Typed from "typed.js"
-import { Environment, OrbitControls, useGLTF, Stats, Html } from "@react-three/drei"
-import { EffectComposer, N8AO, ToneMapping, Bloom, Noise, DepthOfField, HueSaturation, SSR } from "@react-three/postprocessing"
-import { BlendFunction } from "postprocessing"
-import "../styles/about.scss"
-import NavBar from "../Components/NavBar"
-import CanvasExtend from "../Components/CanvasExtend"
-import SplashScreen from "../Components/SplashScreen"
-import { useAudio } from "../Components/AudioContext"
-
+import React, { useState, useEffect, useRef, memo, Suspense } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
+import Typed from "typed.js";
+import {
+  Environment,
+  OrbitControls,
+  useGLTF,
+  Stats,
+  Html,
+} from "@react-three/drei";
+import {
+  EffectComposer,
+  N8AO,
+  ChromaticAberration,
+  HueSaturation,
+  Vignette,
+} from "@react-three/postprocessing";
+import { BlendFunction, ToneMappingMode } from "postprocessing";
+import "../styles/about.scss";
+import NavBar from "../Components/NavBar";
+import CanvasExtend from "../Components/CanvasExtend";
+import SplashScreen from "../Components/SplashScreen";
+import { useAudio } from "../Components/AudioContext";
 
 export const About = () => {
-  const [step, setStep] = useState(-1)
-  const [showLoading, setShowLoading] = useState(true)
+  const [step, setStep] = useState(1);
+  const [showLoading, setShowLoading] = useState(true);
   const { playAudio, stopAudio } = useAudio();
-
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setShowLoading(false)
-    }, 3000) // 5000 milliseconds = 5 seconds
+      setShowLoading(false);
+    }, 300); // 5000 milliseconds = 5 seconds
 
-    return () => clearTimeout(timeout)
-  }, []) // Run effect only once when component mounts
-
+    return () => clearTimeout(timeout);
+  }, []); // Run effect only once when component mounts
 
   const handleStart = () => {
-    setStep(0)
-    playAudio("/sounds/about/alttp_intro.mp3", false)
-
-
-  }
+    setStep(0);
+    playAudio("/sounds/about/alttp_intro.mp3", false);
+  };
 
   const Triforce = (props) => {
     return (
       <div className="triforce ">
-        <div className={`triangle triangle-one ${props.rotate ? "rotatemodeTop" : ""}`}>
+        <div
+          className={`triangle triangle-one ${
+            props.rotate ? "rotatemodeTop" : ""
+          }`}
+        >
           <div className="tri-front"></div>
           <div className="tri-back"></div>
           <div className="tri-left"></div>
           <div className="tri-right"></div>
           <div className="tri-bottom"></div>
         </div>
-        <div className={`triangle triangle-two ${props.rotate ? "rotatemodeLeft" : ""}`}>
+        <div
+          className={`triangle triangle-two ${
+            props.rotate ? "rotatemodeLeft" : ""
+          }`}
+        >
           <div className="tri-front"></div>
           <div className="tri-back"></div>
           <div className="tri-left"></div>
           <div className="tri-right"></div>
           <div className="tri-bottom"></div>
         </div>
-        <div className={`triangle triangle-three ${props.rotate ? "rotatemodeRight" : ""}`}>
+        <div
+          className={`triangle triangle-three ${
+            props.rotate ? "rotatemodeRight" : ""
+          }`}
+        >
           <div className="tri-front"></div>
           <div className="tri-back"></div>
           <div className="tri-left"></div>
@@ -59,37 +77,36 @@ export const About = () => {
           <div className="tri-bottom"></div>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const FlickerCrtScreen = () => {
-    return(
-        <div className="av-screen">
-          <span className="channel-label">AV 9 - SPEL</span>
-          <button className="initiate-btn" onClick={handleStart}>
-            {" "}
-            START{" "}
-          </button>
-          <div className="white-noise"> </div>
-        </div> 
-
-    )
-  }
+    return (
+      <div className="av-screen">
+        <span className="channel-label">AV 9 - SPEL</span>
+        <button className="initiate-btn" onClick={handleStart}>
+          {" "}
+          START{" "}
+        </button>
+        <div className="white-noise"> </div>
+      </div>
+    );
+  };
 
   const ZeldaScreen = () => {
-    const storyEl = React.useRef(null)
-    const [typedComplete, setTypedComplete] = useState(false)
-    const typedRef = useRef(null)
+    const storyEl = React.useRef(null);
+    const [typedComplete, setTypedComplete] = useState(false);
+    const typedRef = useRef(null);
 
     useEffect(() => {
       if (step == 0) {
         const timer = setTimeout(() => {
-          setStep(1)
-        }, 3000)
+          setStep(1);
+        }, 3000);
 
-        return () => clearTimeout(timer)
+        return () => clearTimeout(timer);
       }
-    }, []) // Run only once on component mount
+    }, []); // Run only once on component mount
 
     useEffect(() => {
       if (step == 2) {
@@ -106,36 +123,36 @@ export const About = () => {
           backDelay: 2000,
 
           onComplete: () => {
-            setTypedComplete(true) // Update state when Typed.js completes
+            setTypedComplete(true); // Update state when Typed.js completes
           },
-        })
+        });
         return () => {
           // Destroy Typed instance during cleanup to stop animation
-          typedRef.current.destroy()
-        }
+          typedRef.current.destroy();
+        };
       }
-    }, []) // Run only once on component mount
+    }, []); // Run only once on component mount
 
     // Restart Typed.js
     const restartTyped = () => {
       if (typedRef.current) {
-        typedRef.current.reset()
-        setTypedComplete(false)
+        typedRef.current.reset();
+        setTypedComplete(false);
       }
-    }
+    };
 
     const handleToggle = () => {
       if (step === 2) {
         if (typedRef.current) {
-          typedRef.current.destroy()
-          setTypedComplete(false)
+          typedRef.current.destroy();
+          setTypedComplete(false);
         }
         handleStart();
       } else {
-        setStep(2)
-        playAudio("/sounds/about/alttp_story.mp3", true)
+        setStep(2);
+        playAudio("/sounds/about/alttp_story.mp3", true);
       }
-    }
+    };
 
     return (
       <>
@@ -162,8 +179,9 @@ export const About = () => {
               <button
                 className="start-story-btn"
                 onClick={() => {
-                  handleToggle()
-                }}>
+                  handleToggle();
+                }}
+              >
                 <span>Click to Start</span>
               </button>
               <div className="border">
@@ -194,8 +212,8 @@ export const About = () => {
           </div>
         )}
       </>
-    )
-  }
+    );
+  };
   return (
     <>
       {showLoading ? (
@@ -204,53 +222,132 @@ export const About = () => {
         <>
           <NavBar
             activeNo={1}
-            handleCallback={() => {stopAudio()}}
+            handleCallback={() => {
+              stopAudio();
+            }}
           />
+          <div className="noise-overlay" style={{zIndex:"var(--z-index-5)", opacity:"0.2"}}/>
           <CanvasExtend bgColor={"#4B65C6"}>
-            <Canvas shadows camera={{ position: [-1, 0, 3], near: 0.1, far: 40 }} dpr={1}>
+            <Canvas
+              shadows
+              orthographic
+              camera={{
+                position: [0, .5, 3],
+                rotation: [-0.2, 0, 0],
+                near: 0.1,
+                far: 5,
+                zoom: 500,
+              }}
+              dpr={1}
+            >
               <Stats />
-              <LerpCameraFOV isToggled={step == 2} />
+              <LerpCameraFOV isToggled={step == 2}/>
               <color attach="background" args={["#0f1837"]} />
-              <ambientLight intensity={1} color={"#394160"} />
-              <spotLight intensity={0.8} color="white" angle={0.3} penumbra={1} position={[0, 1, 4]} castShadow shadow-mapSize={[512, 512]} />
-              <spotLight intensity={0.2} color="white" angle={0.3} penumbra={1} position={[-2, 3, -3]} castShadow shadow-mapSize={[512, 512]} />
-              <spotLight intensity={0.3} color="white" angle={1} penumbra={1} position={[0, 1.75, 0]} castShadow shadow-mapSize={[512, 512]} />
+              <ambientLight intensity={15} color={"#394160"} />
+              <spotLight
+                intensity={8}
+                color="white"
+                angle={0.3}
+                penumbra={1}
+                position={[0, 1, 4]}
+                castShadow
+                shadow-mapSize={[512, 512]}
+              />
+              <spotLight
+                intensity={2}
+                color="white"
+                angle={0.3}
+                penumbra={1}
+                position={[-2, 3, -3]}
+                castShadow
+                shadow-mapSize={[512, 512]}
+              />
+              <spotLight
+                intensity={3}
+                color="white"
+                angle={1}
+                penumbra={1}
+                position={[0, 1.75, 0]}
+                castShadow
+                shadow-mapSize={[512, 512]}
+              />
 
-              <spotLight position={[0, 0, 0]} angle={0.5} intensity={1} castShadow />
+              <spotLight
+                position={[0, 0, 0]}
+                angle={0.5}
+                intensity={4}
+                castShadow
+              />
 
-              {// Add a helper to visualize the spotlight
+              {
+                // Add a helper to visualize the spotlight
               }
 
-              <OrbitControls
+              {/*               <OrbitControls
+              enableZoom={false}
                 enablePan={false}
-                enableRotate={isSafari ? false : true}
                 maxDistance={4}
                 minDistance={1.7}
-                minAzimuthAngle={-Math.PI / 8.5}
-                maxAzimuthAngle={Math.PI / 4}
-                minPolarAngle={Math.PI / 6}
-                maxPolarAngle={Math.PI - Math.PI / 2.2}
+                minAzimuthAngle={-Math.PI / 13}
+                maxAzimuthAngle={.001}
+                minPolarAngle={Math.PI / 2.1}
+                maxPolarAngle={Math.PI-Math.PI / 2.05}
               />
-              <RoomModel position={[0.1, -0.55, 0.5]} rotation={[0, -0.5, 0]} scale={[1, 1, 1]}>
-                <Html className="content" scale={[0.15, 0.15, 0.15]} rotation-y={0.35} position={[-0.34, 0.52, -0.33]} transform occlude="blending">
-                  <div className="tv-container crt-scanlines crt-flicker">
-                    {step === -1 ? <FlickerCrtScreen/> : <ZeldaScreen />}
-                  </div>
-                </Html>
+ */}
+              <RoomModel
+                position={[0.1, -0.55, 0.5]}
+                rotation={[0, -0.5, 0]}
+                scale={[1, 1, 1]}
+              >
+                {
+                  <Html rotation-y={0.35} position={[-0.595, 0.73, -0.33]}>
+                    <div class={`tv-box ${step === 2 ? "lerped" : ""}`}>
+                      <div class="face front">
+                        <div class="content">
+                          <div className="tv-container crt-scanlines crt-flicker">
+                            {step === -1 ? (
+                              <FlickerCrtScreen />
+                            ) : (
+                              <ZeldaScreen />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="face top"></div>
+                      <div class="face right"></div>
+                    </div>
+{/*                     <div class="box">
+                      <div class="face front">Front</div>
+                      <div class="face right">Right</div>
+                      <div class="face top">Top</div>
+                    </div> */}
+                  </Html>
+                }
               </RoomModel>
               {
                 <EffectComposer>
-                  <N8AO
+                  { <N8AO
                     halfRes={false} // Whether to render at half resolution for performance (true/false)
                     color="#0a027d" // Base color for occlusion
                     aoRadius={0.15} // Radius of the ambient occlusion effect
                     intensity={1.5} // Intensity of the ambient occlusion effect
                     aoSamples={4} // Number of samples used for ambient occlusion calculation
                     denoiseSamples={2} // Number of samples used for denoising (reduce noise)
-                  />
+                  />}
 
-                  <Noise opacity={0.2} />
-                  <HueSaturation blendFunction={BlendFunction.NORMAL} hue={0} saturation={0.4} />
+                  {
+                    <HueSaturation
+                      blendFunction={BlendFunction.NORMAL}
+                      hue={0}
+                      saturation={0.5}
+                    />
+                  }
+                  {<ChromaticAberration
+                    blendFunction={BlendFunction.SCREEN} // Try SCREEN for a different look
+                    offset={[0.001, 0.001]} // Adjust strength of the effect
+                  />}
+
+                  <Vignette eskil={false} offset={0.2} darkness={0.7} />
                 </EffectComposer>
               }
             </Canvas>
@@ -258,46 +355,59 @@ export const About = () => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
 const RoomModel = memo(({ position, scale, rotation, ...props }) => {
-  const { scene } = useGLTF("/room.gltf")
-  
+  const { scene } = useGLTF("/room.gltf");
+
   return (
-    <primitive position={position} rotation={rotation} scale={scale} object={scene}>
+    <primitive
+      position={position}
+      rotation={rotation}
+      scale={scale}
+      object={scene}
+    >
       {" "}
       {props.children}
     </primitive>
-  )
-})
+  );
+});
 const LerpCameraFOV = ({ isToggled }) => {
-  const { camera } = useThree()
-  const targetFOV = isToggled ? 15 : 30
-  const lerpFactor = 0.05
-  const animationRef = useRef()
+  const { camera } = useThree();
+  const targetFOV = isToggled ? 700 : 500;
+  const lerpFactor = 0.05;
+  const animationRef = useRef();
 
   useEffect(() => {
+    let string = "";
     const updateCamera = () => {
-      const currentFOV = camera.fov
-      const lerpedFOV = currentFOV + (targetFOV - currentFOV) * lerpFactor
+      const currentFOV = camera.zoom;
+      const lerpedFOV = currentFOV + (targetFOV - currentFOV) * lerpFactor;
 
-      camera.fov = lerpedFOV
-      camera.updateProjectionMatrix()
+      camera.zoom = lerpedFOV;
+      camera.updateProjectionMatrix();
+      const startTime = performance.now();
 
       if (Math.abs(lerpedFOV - targetFOV) > 0.01) {
+        string += (lerpedFOV - targetFOV).toFixed(2) + ", ";
+        console.log(string);
+        
         // Continue animating
-        animationRef.current = requestAnimationFrame(updateCamera)
+        animationRef.current = requestAnimationFrame(updateCamera);
+      } else {
+        const endTime = performance.now();
+        console.log(`Time taken: ${endTime - startTime} ms`);
       }
-    }
+    };
 
     // Start animation
-    animationRef.current = requestAnimationFrame(updateCamera)
+    animationRef.current = requestAnimationFrame(updateCamera);
 
-    return () => cancelAnimationFrame(animationRef.current)
-  }, [camera, targetFOV])
+    return () => cancelAnimationFrame(animationRef.current);
+  }, [camera, targetFOV]);
 
-  return null
-}
+  return null;
+};
 
-export default About
+export default About;

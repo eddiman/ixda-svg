@@ -6,6 +6,17 @@
   justify-content: center;
   overflow: hidden; /* Prevents vertical scrolling */
 }
+.decorative-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1000px;
+  height: 1000px;
+  border-radius: 50%;
+  background-color: var(--color-4);
+  filter: blur(30px);
+}
 
 .photo-deck-grid-list {
   display: flex;
@@ -61,9 +72,8 @@
   transition: transform 300ms;
   pointer-events: none; // Prevents pointer events on the deck, top-card sets pointer events to all, so only that one is clickable
 
-  .top-card { 
+  .top-card {
     pointer-events: all;
-    
   }
   .deck {
     position: absolute;

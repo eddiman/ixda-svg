@@ -53,6 +53,7 @@ const AlbumsList = () => {
         
         return (
           <div className="photo-deck-grid-item" key={index} >
+        <div className="decorative-circle"/>
             <h1>{album.name}</h1>
             {index !== 0 ? <AnimatedButton className="color-4 scroll-left" onClick={()=> scrollViewWidth("left")}  >{"<"}</AnimatedButton>: ""}
             {index !== albums.length-1 ? <AnimatedButton className="color-4 scroll-right" onClick={() => scrollViewWidth("right")}  >{">"}</AnimatedButton>: ""}
