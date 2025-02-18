@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useSprings, animated, to as interpolate } from "@react-spring/web";
 import { useDrag } from "@use-gesture/react";
-import { useAudio } from "../Components/AudioContext";
 
-import "../styles/photography.scss";
+import "../styles/events.scss";
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
 const to = (i) => ({
@@ -23,7 +22,7 @@ const trans = (r, s) =>
 function PhotoDeck({ cards }) {
   const deckRefs = useRef([]);
   const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
-  const { playAudio, stopAudio } = useAudio();
+
 
   const [props, api] = useSprings(cards.length, (i) => ({
     ...to(i),
@@ -40,10 +39,8 @@ function PhotoDeck({ cards }) {
       const nextDeckItem = deckRefs.current[index - 1];
       if (down && deckItem != null) {
         deckItem.classList.add("is-down");
-        playAudio("/sounds/photography/paper.mp3", false);
         
       } else {
-        stopAudio();
         deckItem.classList.remove("is-down");
         deckItem.classList.remove("top-card");
 

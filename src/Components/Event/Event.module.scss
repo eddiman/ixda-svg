@@ -1,0 +1,52 @@
+@import "../../styles/tokens.scss";
+@import "../../styles/ixda.scss";
+
+.eventContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: var(--spacing-l);
+
+  .description {
+    font-size: var(--font-xxs);
+  }
+  @media (min-width: 900px) {
+    .description {
+      max-width: 80vw;
+    }
+  }
+
+  .bottomContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-top: auto;
+    gap: var(--spacing-l);
+
+    @media (max-width: 500px) {
+
+    }
+
+    .eventDetails {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      flex-wrap: wrap;
+      gap: var(--spacing-s);
+      p,
+      a {
+        font-size: var(--font-s);
+      }
+      a {
+        width: fit-content;
+      }
+    }
+    .speakers {
+      display: flex;
+      gap: var(--spacing-xs);
+      flex-wrap: wrap;
+      justify-content: end;
+    }
+  }
+}

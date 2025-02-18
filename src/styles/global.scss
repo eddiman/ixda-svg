@@ -1,44 +1,6 @@
-@import 'animation.scss';
-@import 'components.scss';
-@font-face {
-  font-family: "FuturaClassic";
-  src: url("../../public/fonts/FuturaClassic.ttf") format("truetype");
-  /* Optionally, you can specify font-weight and font-style */
-  font-weight: normal;
-  font-style: normal;
-}
-* {
-  box-sizing: border-box;
-}
-
-:root {
-  --color-1: #4b65c6;
-  --color-1-light: #6f85d4;
-  --color-1-dark: #354a8e;
-
-  --color-2: #f5c163;
-  --color-2-light: #f8d28a;
-  --color-2-dark: #c49a4e;
-
-  --color-3: #f19a62;
-  --color-3-light: #f4b084;
-  --color-3-dark: #c37a4d;
-
-  --color-4: #72cd90;
-  --color-4-light: #94d9aa;
-  --color-4-dark: #569e6d;
-
-  --color-5: #645299;
-  --color-5-light: #8473b0;
-  --color-5-dark: #4a3b73;
-
-  --z-index-1: 1;
-  --z-index-2: 10;
-  --z-index-3: 100;
-  --z-index-4: 1000;
-  --z-index-5: 10000;
-  --z-index-6: 99999;
-}
+@import "tokens.scss";
+@import "animation.scss";
+@import "components.scss";
 
 html,
 body,
@@ -50,30 +12,39 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
+  color: var(--gray-1);
 }
 
 body {
-  position: fixed;
   overflow: hidden;
   overscroll-behavior-y: none;
-  font-family: "Inter", sans-serif;
+  font-family: "Satoshi", sans-serif;
 }
 
 p {
+  font-family: "Satoshi", sans-serif;
   margin: 0;
   padding: 0;
+  font-weight: 300;
 }
 
-h1{
-  font-family: "FuturaClassic", sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
 }
 a {
-  font-family: "FuturaClassic", sans-serif;
-  padding-right: 10px;
+  font-family: "Satoshi", sans-serif;
   cursor: pointer;
-  pointer-events: all;
-  color: black;
   text-decoration: none; /* no underline */
+  font-weight: 300;
+
+  &:-webkit-any-link  {
+    color: unset;
+  }
 }
 .view-screen {
   width: 100%;
@@ -92,24 +63,4 @@ a {
   opacity: 0;
   transform: translateY(100%);
   animation: popUp 0.5s ease forwards 3s;
-}
-
-
-
-.draggable-scroll-container {
-  height: 100%;
-}
-
-
-.noise-overlay {
-  animation: grain 8s steps(10) infinite;
-  background-image: url("../../public/img/noise.svg");
-  content: "";
-  height: 275%;
-  left: -50%;
-  opacity: 0.3;
-  position: fixed;
-  top: -100%;
-  width: 275%;
-  pointer-events: none;
 }

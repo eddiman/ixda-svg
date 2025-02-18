@@ -5,14 +5,11 @@ import { createRoot } from "react-dom/client"
 import { Suspense } from "react"
 import { App } from "src/App"
 import "./styles/global.scss"
-import { AudioProvider } from "./Components/AudioContext"
 
 createRoot(document.getElementById("root")).render(
   <>
     <Suspense fallback={null}>
-      <AudioProvider>
         <App />
-      </AudioProvider>
     </Suspense>
   </>,
 )

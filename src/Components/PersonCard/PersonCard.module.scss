@@ -1,0 +1,39 @@
+@import "../../styles/tokens.scss";
+.personCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  gap: var(--spacing-s);
+  .photo {
+    width: 192px;
+    height: 192px;
+    object-fit: cover;
+    margin-left: auto;
+    filter: saturate(0);
+
+    @media (max-width: 900px) or (max-height: 900px) {
+      width: 128px;
+      height: 128px;
+    }
+  }
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+
+    .name {
+      font-size: var(--font-xxs);
+      font-weight: 400;
+      text-align: end;
+      width: 100%;
+    }
+
+    .title,
+    .business {
+      font-size: var(--font-3xs);
+      font-weight: 400;
+      text-align: end;
+      width: 100%;
+    }
+  }
+}

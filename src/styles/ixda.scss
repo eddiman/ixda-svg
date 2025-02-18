@@ -1,0 +1,86 @@
+@mixin ixda-colors {
+  &.white {
+    background-color: var(--white);
+    color: var(--gray-1);
+    a:after {
+        background-color: var(--gray-1);
+      }
+  }
+  &.gray-6 {
+    background-color: var(--gray-6);
+    color: var(--gray-1);
+    a:after {
+        background-color: var(--gray-1);
+      }
+  }
+  &.gray-1 {
+    background-color: var(--gray-1);
+    color: var(--white);
+    a:after {
+        background-color: var(--white);
+      }
+  }
+  &.ixda-red {
+    background-color: var(--ixda-red);
+    color: var(--white);
+    a:after {
+        background-color: var(--white);
+      }
+  }
+  &.ixda-purple {
+    background-color: var(--ixda-purple);
+    color: var(--white);
+    a:after {
+        background-color: var(--white);
+      }
+  }
+  &.ixda-blue {
+    background-color: var(--ixda-blue);
+    color: var(--gray-1);
+    a:after {
+        background-color: var(--gray-1);
+      }
+  }
+  &.ixda-blue {
+    background-color: var(--ixda-blue);
+    color: var(--gray-1);
+    a:after {
+        background-color: var(--gray-1);
+      }
+  }
+  &.ixda-green {
+    background-color: var(--ixda-green);
+    color: var(--gray-1);
+    a:after {
+        background-color: var(--gray-1);
+      }
+  }
+  &.ixda-orange {
+    background-color: var(--ixda-orange);
+    color: var(--gray-1);
+    a:after {
+        background-color: var(--gray-1);
+      }
+  }
+  &.ixda-pink {
+    background-color: var(--ixda-pink);
+    color: var(--gray-1);
+    a:after {
+        background-color: var(--gray-1);
+      }
+  }
+  &.ixda-cyan {
+    background-color: var(--ixda-cyan);
+    color: var(--gray-1);
+     a:after {
+        background-color: var(--gray-1);
+      }
+  }
+  &.ixda-yellow {
+    background-color: var(--ixda-yellow);
+    color: var(--gray-1);
+    a:after {
+        background-color: var(--gray-1);
+      }
+  }
+}
