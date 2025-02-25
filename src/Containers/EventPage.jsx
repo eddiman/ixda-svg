@@ -1,17 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 
-import "../styles/events.scss";
-import PhotoDeck from "../Components/PhotoDeck";
+import "../styles/eventPage.scss";
 import { fetchEvents } from "../api/fetchEvents";
 import SplashScreen from "../Components/SplashScreen/SplashScreen";
-import NavBar from "../Components/NavBar/NavBar";
-import AnimatedButton from "../Components/AnimatedButton/AnimatedButton";
 import Event from "../Components/Event/Event";
+import Footer from "../Components/Footer/Footer";
+import BaseLayout from "../Components/BaseLayout/BaseLayout";
+import Menu from "../Components/Menu/Menu";
 
 const EventsList = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const scrollRef = useRef(null);
 
   useEffect(() => {
     const getEvents = async () => {
@@ -25,7 +24,6 @@ const EventsList = () => {
   useEffect(() => {
     // Check if there's a hash in the URL
     const hash = window.location.hash;
-console.log(hash);
 
     if (hash) {
       // Scroll to the element with the corresponding ID
@@ -41,30 +39,34 @@ console.log(hash);
 
   return (
     <div className="events-list">
-      {events
+
+      { loading ? <BaseLayout subTitle="..." title="Events">Loading Events...</BaseLayout> :
+      events
         .sort((a, b) => b.eventMeetupNo - a.eventMeetupNo) // Sort in descending order
         .map((event, index) => (
           <Event key={index} event={event} />
         ))}
+        <Footer/>
+
     </div>
   );
 };
 
-export const Events = () => {
+export const EventPage = () => {
   const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLoading(false);
-    }, 300); // 5000 milliseconds = 5 seconds
+    }, 3000); // This has to be about 300ms more than fadeOut animation duration in SplashScreen.module.scss, something with how css renders differently than what the setTimeout times stuff, if same the fadout animation cuts out a bit shorter
     return () => clearTimeout(timeout);
   }, []); // Run effect only once when component mounts
 
   return (
     <>
-      {showLoading ? <SplashScreen color={4} selected={true} /> : ""}
-      <NavBar activeNo={4} />
-      <div className={".event-container fade-in"}>
+    <Menu/>
+      {showLoading ? <SplashScreen/> : ""}
+      <div className={"event-container fade-in"}>
         <EventsList />
       </div>
     </>

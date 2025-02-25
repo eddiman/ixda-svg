@@ -1,25 +1,38 @@
 @import "../../styles/tokens.scss";
 .personCard {
+  --maxWidth: 192px;
+
+  //Set the media query up top so we only need to adjust the variable controlling the width of the personcard container
+  @media (max-width: 1100px) or (max-height: 900px) {
+    --maxWidth: 128px;
+  }
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: end;
   gap: var(--spacing-s);
+  max-width: var(--maxWidth);
+
   .photo {
-    width: 192px;
-    height: 192px;
+    width: var(--maxWidth);
+    height: auto;
     object-fit: cover;
     margin-left: auto;
+    transition: filter ease 200ms;
     filter: saturate(0);
 
-    @media (max-width: 900px) or (max-height: 900px) {
-      width: 128px;
-      height: 128px;
+    &:hover {
+      filter: saturate(1);
     }
+
+
   }
   .textContainer {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    padding: 0 var(--spacing-s);
 
     .name {
       font-size: var(--font-xxs);

@@ -1,15 +1,44 @@
-import React from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {Events} from './Containers/Events';
+import { EventPage } from './Containers/EventPage';
+import { fetchSiteConfig } from "./api/fetchSiteConfig";
+import { AboutPage } from './Containers/AboutPage';
 
-export const App = () => {
+
+// Create context
+export const SiteConfigContext = createContext(null);
+
+// Context provider
+export const SiteConfigProvider = ({ children }) => {
+  const [siteConfig, setSiteConfig] = useState(null);
+
+  useEffect(() => {
+    const getConfig = async () => {
+      const data = await fetchSiteConfig();
+      setSiteConfig(data);
+    };
+    getConfig();
+  }, []);
+
   return (
-    <Router>
-      <Routes>
-        {/* Main root route for Home */}
-        <Route path="/" element={<Events />} />
-      </Routes>
-    </Router>
+    <SiteConfigContext.Provider value={siteConfig}>
+      {children}
+    </SiteConfigContext.Provider>
   );
 };
 
+export const useSiteConfig = () => useContext(SiteConfigContext);
+
+// Main App
+export const App = () => {
+  return (
+    <SiteConfigProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<EventPage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+      </Router>
+    </SiteConfigProvider>
+  );
+};

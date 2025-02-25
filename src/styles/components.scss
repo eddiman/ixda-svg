@@ -1,178 +1,49 @@
 // MARK: - Navigation
-nav {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  position: absolute;
-  z-index: var(--z-index-6);
-  left: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(7px);
 
-  opacity: 0;
-  transform: translateY(100%);
-  animation: popUp 0.5s ease forwards 1s;
-  /*Back button*/
-  .color-0 {
-    text-align: center;
-    width: 54px;
-    @media only screen and (max-width: 750px) {
-      max-width: 45px;
-    }
-
-    &:before {
-      background: #ffffff;
-      transition: max-height 0.2s ease, width 0.2s, left 0.7s, border-radius 4s;
-      mix-blend-mode: color;
-    }
-  }
-  a {
-    flex: 1;
-    transition: color 0.15s ease-in-out;
-    font-size: 2rem;
-    padding: 0.5rem 1rem;
-    color: #000;
-    text-decoration: none;
-    display: inline-block;
-    position: relative;
-
-    /*This is when the blob expands after clicking the link*/
-    &.selected {
-      &:before {
-        border-radius: 9999px;
-        animation: expand 1s ease-in-out forwards 0.2s;
-        height: 54px;
-        width: 54px;
-        left: 0%;
-        bottom: 0%;
-        max-height: 100%;
-        margin: 0 auto;
-        @media only screen and (max-width: 750px) {
-          width: 45px;
-          height: 45px;
-        }
-      }
-    }
-
-    @media only screen and (max-width: 750px) {
-      font-size: 1.5rem;
-    }
-
-    &:before {
-      content: "";
-      position: absolute;
-      display: inline-block;
-      right: 0;
-      top: 0;
-      height: 100%;
-      transition: max-height 0.2s ease, width 0.25s, left 0.2s,
-        border-radius 0.2s;
-      width: 100%;
-      max-height: 0px;
-      mix-blend-mode: hard-light;
-    }
-    &:hover::before {
-      max-height: 100%;
-      top: initial;
-      bottom: 0;
-    }
-
-    &.active {
-      &:hover {
-        color: black;
-        cursor: default;
-      }
-      &:before {
-        content: "";
-        position: absolute;
-        display: inline-block;
-        right: 0;
-        top: 0;
-        height: 100%;
-        width: 100%;
-        max-height: 100%;
-        z-index: -1;
-      }
-    }
-  }
-}
 // MARK: - Button
 button {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(7px);
+  background-color: var(--white);
   border: none;
   transition: color 0.15s ease-in-out;
   font-size: 2rem;
   padding: 0.5rem 1rem;
-  color: #000;
+  color: var(--gray-1);
   text-decoration: none;
   display: inline-block;
   position: relative;
-  font-family: "FuturaClassic", sans-serif;
+  font-family: "Satoshi", sans-serif;
   cursor: pointer;
 
   @media only screen and (max-width: 750px) {
     font-size: 1.5rem;
   }
-
+&:hover {
+  color: var(--white);
+  
+}
   &:before {
     content: "";
     position: absolute;
     display: inline-block;
     right: 0;
-    background: #ffffff;
+    background-color: var(--gray-1);
     top: 0;
     height: 100%;
     transition: max-height 0.2s ease, width 0.25s, left 0.2s, border-radius 0.2s;
     width: 100%;
     max-height: 0px;
-    mix-blend-mode: color;
+    z-index: -1;
   }
-  &.color-0 {
-    &:before {
-      background: #ffffff;
-    }
-  }
-  &.color-1 {
-    &:before {
-      background: var(--color-1);
-      mix-blend-mode: hard-light;
-    }
-  }
-  &.color-2 {
-    &:before {
-      background: var(--color-2);
-      mix-blend-mode: hard-light;
-    }
-  }
-  &.color-3 {
-    &:before {
-      background: var(--color-3);
-      mix-blend-mode: hard-light;
-    }
-  }
-  &.color-4 {
-    &:before {
-      background: var(--color-4);
-      mix-blend-mode: hard-light;
-    }
-  }
-  .color-5 {
-    &:before {
-      background: var(--color-5);
-      mix-blend-mode: hard-light;
-    }
-  }
+
   &:hover:before {
     max-height: 100%;
     top: initial;
     bottom: 0;
+    
   }
 
   &.active {
     &:hover {
-      color: black;
       cursor: default;
     }
     &:before {
@@ -197,8 +68,18 @@ a {
   position: relative;
   cursor: pointer;
   font-size: var(--font-3xs);
+  
+  &:hover {
+    svg {
+      mix-blend-mode: unset !important;
+  
+      }
+  
+  }
+
   &:hover:after {
     mix-blend-mode: exclusion;
+
 
   }
   &:after {
@@ -206,10 +87,9 @@ a {
     position: absolute;
     display: inline-block;
     right: 0;
-    background: #ffffff;
+    background-color: var(--white);
     bottom: 0;
     height: 100%;
-    transition: max-height 0.2s ease, width 0.25s, left 0.2s, border-radius 0.2s;
     width: 100%;
     max-height: 2px;
   }
@@ -218,7 +98,7 @@ a {
     position: absolute;
     display: inline-block;
     right: 0;
-    background: #ffffff;
+    background-color: #ffffff;
     top: 0;
     height: 100%;
     transition: max-height 0.2s ease, width 0.25s, left 0.2s, border-radius 0.2s;
@@ -253,154 +133,3 @@ a {
     }
   }
 }
-
-// MARK: - Loading Component Overlay
-.loading-component {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: fadeOut 1s ease forwards 2s;
-  &.color-1 {
-    background-color: var(--color-1);
-  }
-  &.color-2 {
-    background-color: var(--color-2);
-  }
-  &.color-3 {
-    background-color: var(--color-3);
-  }
-  &.color-4 {
-    background-color: var(--color-4);
-  }
-  &.color-5 {
-    background-color: var(--color-5);
-  }
-
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: white;
-    mix-blend-mode: hard-light;
-    &.color-1 {
-      background-color: var(--color-1);
-    }
-    &.color-2 {
-      background-color: var(--color-2);
-    }
-    &.color-3 {
-      background-color: var(--color-3);
-    }
-    &.color-4 {
-      background-color: var(--color-4);
-    }
-    &.color-5 {
-      background-color: var(--color-5);
-    }
-  }
-
-  .figures-inner {
-    display: flex;
-    gap: 1.5rem;
-    animation: fadeIn 1s ease forwards;
-
-    @media only screen and (max-width: 475px) {
-      gap: 1rem;
-    }
-    figure {
-      height: 126px;
-      width: 126px;
-      margin: 0;
-
-      @media only screen and (max-width: 750px) {
-        height: 64px;
-        width: 64px;
-      }
-      @media only screen and (max-width: 475px) {
-        height: 48px;
-        width: 48px;
-      }
-    }
-    .cube {
-      background-image: url("../../public/img/logo/Cube.svg");
-      background-size: cover;
-      animation: spring-spin 6s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
-      &.selected {
-        background-image: url("../../public/img/logo/Cube_outline.svg");
-      }
-    }
-    .circle {
-      background-image: url("../../public/img/logo/Circle.svg");
-      background-size: cover;
-      transform-origin: 100% 180%;
-      animation: compress-and-bounce 2s cubic-bezier(0.68, -0.55, 0.27, 1.55)
-        infinite 0.25s;
-      &.selected {
-        background-image: url("../../public/img/logo/Circle_outline.svg");
-      }
-    }
-    .triangle {
-      background-image: url("../../public/img/logo/Triangle.svg");
-      background-size: cover;
-      transform-style: preserve-3d;
-      animation: rotate-spring 3s ease-in-out infinite 0.5s;
-      &.selected {
-        background-image: url("../../public/img/logo/Triangle_outline.svg");
-      }
-    }
-    .cross {
-      background-image: url("../../public/img/logo/Cross.svg");
-      background-size: cover;
-      animation: continuous-rotation 5s linear infinite 1s;
-      &.selected {
-        background-image: url("../../public/img/logo/Cross_outline.svg");
-      }
-    }
-    .donut {
-      background-image: url("../../public/img/logo/Donut.svg");
-      background-size: cover;
-      &.selected {
-        background-image: url("../../public/img/logo/Donut_outline.svg");
-      }
-      animation: shrink-rotate-expand 5s
-        linear(
-          0 0%,
-          0 1.8%,
-          0.01 3.6%,
-          0.03 6.35%,
-          0.07 9.1%,
-          0.13 11.4%,
-          0.19 13.4%,
-          0.27 15%,
-          0.34 16.1%,
-          0.54 18.35%,
-          0.66 20.6%,
-          0.72 22.4%,
-          0.77 24.6%,
-          0.81 27.3%,
-          0.85 30.4%,
-          0.88 35.1%,
-          0.92 40.6%,
-          0.94 47.2%,
-          0.96 55%,
-          0.98 64%,
-          0.99 74.4%,
-          1 86.4%,
-          1 100%
-        )
-        infinite 1.25s;
-      transform-origin: center bottom;
-    }
-  }
-}
-
-// MARK: - Base Layout
-

@@ -1,0 +1,68 @@
+@import "../../styles/ixda.scss";
+
+.loadingComponent {
+  --duration: 2700ms;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  animation: fadeOut var(--duration) ease-in-out forwards;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+
+  @include ixda-colors;
+
+  svg {
+    height: 196px;
+    opacity: 0;
+    width: auto;
+    animation: fadeInMoveUp 0.6s ease-out forwards 200ms;
+    mix-blend-mode: hard-light;
+  }
+  .title {
+    opacity: 0;
+    mix-blend-mode: hard-light;
+    font-size: var(--font-xl);
+    animation: fadeInMoveDown 0.6s ease-out forwards 300ms;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeInMoveUp {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeInMoveDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
