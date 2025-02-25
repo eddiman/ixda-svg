@@ -3,20 +3,11 @@ nav {
   position: fixed;
   width: 100vw;
 
-  --padding: calc(calc(var(--spacing-xl) + var(--spacing-xl)) * -1);
-  --linkHeight: calc(var(--font-m) - 3px);
-  /* top: calc(-var(--spacing-xl) - var(--spacing-xl) - var(--font-m)); */
-  top: calc(var(--padding) - var(--linkHeight));
   z-index: var(--z-index-1);
   transition: top 300ms ease-in-out;
   @include ixda-colors;
-
-  @media (max-width: 500px) {
-    --padding: calc(calc(var(--spacing-xl) + var(--spacing-xl)) * -1);
-    --linkHeight: calc(30px * 3 + var(--spacing-l));
-  }
   &.open {
-    top: 0;
+    top: 0 !important;
   }
   .innerMenu {
     background-color: var(--gray-6);
@@ -41,11 +32,25 @@ nav {
 
     @media (max-width: 500px) {
       flex-direction: column;
-      --padding: calc(calc(var(--spacing-xl) + var(--spacing-xl)) * -1);
-      --linkHeight: calc(var(--font-m) * 3);
     }
 
-    /* Mobile: Stack links in a column */
+    .socialMedia {
+      display: flex;
+      gap: var(--spacing-s);
+      margin-left: auto;
+      align-items: center;
+
+      a {
+        height: 32px;
+        &:after {
+          content: none;
+        }
+        img {
+          height: 32px;
+          width: auto;
+        }
+      }
+    }
   }
   .hamburger {
     width: 40px;
@@ -72,6 +77,7 @@ nav {
       height: 2px;
       background-color: var(--gray-1);
       transition: 200ms;
+      max-width: 16px;
       &:before,
       &:after {
         position: absolute;
@@ -88,14 +94,15 @@ nav {
       &:before {
         top: -6px;
       }
+
       &.isOpen {
         background-color: transparent; // Hide middle bar
-    
+
         &:before {
           top: 0;
           transform: rotate(45deg);
         }
-    
+
         &:after {
           top: 0;
           transform: rotate(-45deg);

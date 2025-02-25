@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { EventPage } from './Containers/EventPage';
 import { fetchSiteConfig } from "./api/fetchSiteConfig";
 import { AboutPage } from './Containers/AboutPage';
+import { SponsorsPage } from './Containers/SponsorsPage';
+import { ContactPage } from './Containers/ContactPage';
 
 
 // Create context
@@ -37,6 +39,8 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<EventPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/sponsors" element={<SponsorsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </Router>
     </SiteConfigProvider>

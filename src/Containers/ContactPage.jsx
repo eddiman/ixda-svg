@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import "../styles/aboutPage.scss";
+import "../styles/eventPage.scss";
 import SplashScreen from "../Components/SplashScreen/SplashScreen";
 import BaseLayout from "../Components/BaseLayout/BaseLayout";
 import Menu from "../Components/Menu/Menu";
 
-export const AboutPage = () => {
+export const ContactPage = () => {
   const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
@@ -18,8 +18,8 @@ export const AboutPage = () => {
     <>
     <Menu/>
       {showLoading ? <SplashScreen/> : ""}
-      <div className={"about-container fade-in"}>
-        <BaseLayout title="IxDA - Interaction Design Assocation" subTitle="About us">  wagama</BaseLayout>
+      <div className={"contact-container fade-in"}>
+        <BaseLayout title="Want to get in contact?" subTitle="Contact">  wagama</BaseLayout>
       </div>
     </>
   );

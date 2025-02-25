@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import "../styles/aboutPage.scss";
+import "../styles/eventPage.scss";
 import SplashScreen from "../Components/SplashScreen/SplashScreen";
 import BaseLayout from "../Components/BaseLayout/BaseLayout";
 import Menu from "../Components/Menu/Menu";
 
-export const AboutPage = () => {
+export const SponsorsPage = () => {
   const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export const AboutPage = () => {
     <Menu/>
       {showLoading ? <SplashScreen/> : ""}
       <div className={"about-container fade-in"}>
-        <BaseLayout title="IxDA - Interaction Design Assocation" subTitle="About us">  wagama</BaseLayout>
+        <BaseLayout title="Sponsorship" subTitle="Sponsors">  wagama</BaseLayout>
       </div>
     </>
   );
