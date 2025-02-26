@@ -1,0 +1,81 @@
+.about-container {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden; /* Enables horizontal scrolling */
+  overflow-y: auto; /* Prevents vertical scrolling */
+  scroll-snap-type: y mandatory; /* Smooth snapping between images */
+  width: 100vw;
+  height: 100vh;
+  scroll-behavior: smooth; /* Smooth scroll transition */
+  @media (max-width: 700px) {
+    display: block;
+    scroll-snap-type: none;
+    overflow-y: scroll;
+  }
+
+  /* Unset the mix-blend-mode set in baselayout when needed*/
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    mix-blend-mode: unset !important;
+    color: var(--ixda-purple);
+  }
+  a svg {
+    mix-blend-mode: unset !important;
+    path {
+      fill: var(--ixda-purple) !important;
+    }
+  }
+  .max-half {
+    max-width: 50%;
+    @media (max-width: 900px) {
+      max-width: 100%;
+    }
+  }
+
+//MARK: About IXDA
+  .ixda-content {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-xl);
+
+    img {
+      min-width: 300px;
+
+      width: 100%;
+      height: auto;
+      margin-bottom: auto;
+    }
+    @media (max-width: 900px) {
+      flex-direction: column;
+      img {
+        max-height: 400px;
+        max-width: 533px;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+      }
+    }
+  }
+//MARK: The board
+  .board-members-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+
+    .board-grid {
+      display: flex;
+      gap: var(--spacing-xs);
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      align-items: flex-start;
+      @media (max-width: 700px) {
+      }
+    }
+  }
+}
+//MARK: Program commitee

@@ -19,7 +19,7 @@ export const SponsorsPage = () => {
     <Menu/>
       {showLoading ? <SplashScreen/> : ""}
       <div className={"about-container fade-in"}>
-        <BaseLayout title="Sponsorship" subTitle="Sponsors">  wagama</BaseLayout>
+        <BaseLayout title="Sponsorship" subTitle="Sponsors">Not yet implemented with Sanity...</BaseLayout>
       </div>
     </>
   );

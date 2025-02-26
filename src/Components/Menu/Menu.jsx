@@ -6,6 +6,7 @@ const MenuComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [menuHeight, setMenuHeight] = useState(0);
   const menuRef = useRef(null);
+  const menuWrapperRef = useRef(null); // Ref for detecting outside clicks
   const location = useLocation();
   const isRoot = location.pathname === "/";
 
@@ -27,8 +28,28 @@ const MenuComponent = () => {
     return () => window.removeEventListener("resize", updateMenuHeight);
   }, []);
 
+  // Close menu if clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuWrapperRef.current && !menuWrapperRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
     <nav
+      ref={menuWrapperRef} // Attach ref to the wrapper
       className={`${isOpen ? styles.open : ""}`}
       style={{ top: `-${menuHeight}px` }}
     >
@@ -50,7 +71,14 @@ const MenuComponent = () => {
 
         <div className={styles.socialMedia}>
           <a
-            href="https://www.instagram.com/ixda_stavanger/"
+            href="https://www.meetup.com/ixda-stavanger"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="/img/meetup.svg" alt="Instagram" />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/ixda-stavanger"
             target="_blank"
             rel="noopener noreferrer"
           >

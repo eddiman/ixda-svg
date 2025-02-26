@@ -19,7 +19,7 @@ export const ContactPage = () => {
     <Menu/>
       {showLoading ? <SplashScreen/> : ""}
       <div className={"contact-container fade-in"}>
-        <BaseLayout title="Want to get in contact?" subTitle="Contact">  wagama</BaseLayout>
+        <BaseLayout title="Want to get in contact?" subTitle="Contact">Not yet implemented with Sanity...</BaseLayout>
       </div>
     </>
   );
